@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://pqerpfydlepk"]
+
+[ext_resource type="Script" path="res://scripts/ai_bot.gd" id="1_omnam"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ny0g6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ykk1c"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4bn88"]
+
+[node name="AI Bot" type="RigidBody2D"]
+script = ExtResource("1_omnam")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ny0g6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_ykk1c")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_4bn88")
