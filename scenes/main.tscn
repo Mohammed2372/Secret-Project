@@ -1,3 +1,51 @@
-[gd_scene format=3 uid="uid://crxekajrsafq3"]
+[gd_scene load_steps=7 format=3 uid="uid://crxekajrsafq3"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_vw8ta"]
+[ext_resource type="Texture2D" uid="uid://we80388ymqua" path="res://assets/WhatsApp Image 2025-02-11 at 01.17.56_1b08c0a2.jpg" id="2_fcl01"]
+[ext_resource type="PackedScene" uid="uid://cx6hnh0an8v5f" path="res://scenes/player.tscn" id="3_qstxw"]
+[ext_resource type="PackedScene" uid="uid://pqerpfydlepk" path="res://scenes/ai_bot.tscn" id="4_mi6mq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f2xey"]
+texture = ExtResource("2_fcl01")
+texture_region_size = Vector2i(727, 727)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-363.5, -363.5, 363.5, -363.5, 363.5, 363.5, -363.5, 363.5)
+
+[sub_resource type="TileSet" id="TileSet_6xnft"]
+tile_size = Vector2i(727, 727)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 192
+physics_layer_1/collision_layer = 2
+physics_layer_1/collision_mask = 192
+physics_layer_2/collision_layer = 4
+physics_layer_2/collision_mask = 192
+physics_layer_3/collision_layer = 8
+physics_layer_3/collision_mask = 192
+physics_layer_4/collision_layer = 16
+physics_layer_4/collision_mask = 192
+sources/1 = SubResource("TileSetAtlasSource_f2xey")
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_vw8ta")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(0.18, 0.18)
+tile_set = SubResource("TileSet_6xnft")
+
+[node name="Player" parent="." instance=ExtResource("3_qstxw")]
+position = Vector2(62, 66)
+scale = Vector2(0.7, 0.7)
+collision_layer = 128
+collision_mask = 31
+move_distance = 135.0
+
+[node name="AI Bot" parent="." node_paths=PackedStringArray("tilemap") instance=ExtResource("4_mi6mq")]
+position = Vector2(62, 66)
+scale = Vector2(0.7, 0.7)
+collision_layer = 0
+collision_mask = 63
+tilemap = NodePath("../TileMapLayer")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(571, 320)
+zoom = Vector2(0.72, 0.72)

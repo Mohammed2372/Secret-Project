@@ -1,15 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://cx6hnh0an8v5f"]
+[gd_scene load_steps=6 format=3 uid="uid://cx6hnh0an8v5f"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_td2jt"]
+[ext_resource type="Texture2D" uid="uid://cd26e30bxengl" path="res://icon.svg" id="2_nvlag"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8v8dr"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n3th3"]
+radius = 44.0
+height = 88.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_emj14"]
+radius = 43.0
+height = 86.0
 
-[node name="Player" type="RigidBody2D"]
+[node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_td2jt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_nvlag")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_8v8dr")
