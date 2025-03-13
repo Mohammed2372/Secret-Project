@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=4 uid="uid://crxekajrsafq3"]
+
+[ext_resource type="Script" uid="uid://btyvgfvvssw45" path="res://scripts/main.gd" id="1_sqrxn"]
+[ext_resource type="PackedScene" uid="uid://jrbe88mma876" path="res://scenes/block.tscn" id="2_28jt5"]
+[ext_resource type="Texture2D" uid="uid://du0dr7ink8m7a" path="res://assets/maze_sprites.PNG" id="2_huc34"]
+[ext_resource type="PackedScene" uid="uid://brgttitstv6wm" path="res://scenes/coin.tscn" id="3_h53qw"]
+[ext_resource type="PackedScene" uid="uid://cbwgf6puy0me0" path="res://scenes/key.tscn" id="4_3o81x"]
+[ext_resource type="PackedScene" uid="uid://pqerpfydlepk" path="res://scenes/ai_bot.tscn" id="4_6dvvm"]
+[ext_resource type="PackedScene" uid="uid://0t2ijiodrki1" path="res://scenes/player_3d.tscn" id="8_dyqk6"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_arbk7"]
+texture = ExtResource("2_huc34")
+7:16/0 = 0
+7:16/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:17/0 = 0
+14:19/0 = 0
+11:18/0 = 0
+2:2/0 = 0
+2:3/0 = 0
+11:17/0 = 0
+12:18/0 = 0
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_6xnft"]
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_arbk7")
+
+[node name="1" type="Node2D" node_paths=PackedStringArray("player", "ai")]
+script = ExtResource("1_sqrxn")
+player = NodePath("Player3d")
+ai = NodePath("AI Bot")
+wall_scene = ExtResource("2_28jt5")
+coin_scene = ExtResource("3_h53qw")
+special_coin_scene = ExtResource("4_3o81x")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+scale = Vector2(8, 8)
+tile_map_data = PackedByteArray("AAAAAAAAAAALABIAAAABAAAAAAALABIAAAABAAEAAAALABIAAAAAAAEAAAAMABEAAAACAAAAAAALABIAAAADAAAAAAALABIAAAADAAEAAAALABIAAAAEAAAAAAAMABEAAAAEAAEAAAALABIAAAAFAAAAAAALABIAAAAFAAEAAAALABIAAAAGAAAAAAALABIAAAAGAAEAAAALABIAAAAHAAAAAAAMABEAAAAIAAAAAAALABIAAAAIAAEAAAALABIAAAAIAAIAAAALABIAAAAHAAIAAAALABIAAAAFAAIAAAALABIAAAAGAAIAAAAMABEAAAAEAAIAAAAMABEAAAADAAIAAAALABIAAAACAAIAAAALABIAAAABAAIAAAALABIAAAAAAAIAAAALABIAAAAJAAIAAAAMABEAAAAAAAMAAAALABIAAAAAAAQAAAALABIAAAAAAAUAAAALABIAAAABAAUAAAALABIAAAACAAUAAAALABIAAAADAAUAAAAMABEAAAAEAAUAAAALABIAAAAFAAUAAAALABIAAAAGAAUAAAALABIAAAAHAAUAAAALABIAAAAIAAUAAAALABIAAAAJAAUAAAALABIAAAAJAAEAAAALABIAAAAJAAAAAAAMABEAAAAJAAMAAAALABIAAAAJAAQAAAALABIAAAAIAAQAAAALABIAAAAHAAQAAAALABIAAAAGAAQAAAALABIAAAAFAAQAAAALABIAAAAEAAQAAAAMABEAAAADAAQAAAALABIAAAACAAQAAAALABIAAAABAAQAAAAMABEAAAABAAMAAAALABIAAAACAAMAAAALABIAAAADAAMAAAALABIAAAAEAAMAAAALABIAAAAFAAMAAAALABIAAAAGAAMAAAALABIAAAAHAAMAAAAMABEAAAAIAAMAAAALABIAAAAJAAYAAAAMABEAAAAJAAcAAAALABIAAAAJAAgAAAALABIAAAAJAAkAAAALABIAAAAIAAkAAAALABIAAAAHAAkAAAALABIAAAAGAAkAAAAMABEAAAAFAAkAAAALABIAAAAEAAkAAAAMABEAAAADAAkAAAALABIAAAACAAkAAAALABIAAAABAAkAAAAMABEAAAAAAAkAAAALABIAAAAAAAgAAAALABIAAAAAAAcAAAALABIAAAAAAAYAAAALABIAAAABAAYAAAALABIAAAACAAYAAAALABIAAAADAAYAAAALABIAAAAEAAYAAAALABIAAAAFAAYAAAALABIAAAAGAAYAAAALABIAAAAHAAYAAAAMABEAAAAIAAYAAAALABIAAAAIAAcAAAALABIAAAAIAAgAAAALABIAAAAHAAgAAAALABIAAAAGAAgAAAALABIAAAAFAAgAAAALABIAAAAEAAgAAAALABIAAAADAAgAAAALABIAAAACAAgAAAALABIAAAABAAgAAAALABIAAAABAAcAAAALABIAAAACAAcAAAAMABEAAAADAAcAAAALABIAAAAEAAcAAAAMABEAAAAFAAcAAAALABIAAAAGAAcAAAALABIAAAAHAAcAAAALABIAAAAHAAEAAAALABIAAAACAAEAAAAMABEAAAA=")
+tile_set = SubResource("TileSet_6xnft")
+
+[node name="AI Bot" parent="." node_paths=PackedStringArray("main_script", "tilemap", "player", "ai_camera") instance=ExtResource("4_6dvvm")]
+position = Vector2(62, 66)
+scale = Vector2(0.7, 0.7)
+collision_layer = 0
+collision_mask = 63
+main_script = NodePath("..")
+tilemap = NodePath("../TileMapLayer")
+player = NodePath("../Player3d")
+ai_camera = NodePath("../Player3d/Camera")
+
+[node name="Player3d" parent="." node_paths=PackedStringArray("main") instance=ExtResource("8_dyqk6")]
+z_index = 5
+position = Vector2(-11, -31)
+scale = Vector2(0.14033, 0.14033)
+collision_layer = 128
+collision_mask = 3
+main = NodePath("..")
+
+[node name="Camera" type="Camera2D" parent="Player3d"]
+position = Vector2(632.181, 562.957)
+scale = Vector2(7.12604, 7.12604)

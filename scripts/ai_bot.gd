@@ -1,52 +1,107 @@
 extends CharacterBody2D
 
-# Movement settings
-@export var move_speed = 200  # Pixels per second
+@export_category("main variables")
+@export var main_script: Node2D
 @export var tilemap: TileMapLayer  # Assign your TileMap node in the Godot editor
+@export var player: CharacterBody2D
+@export_category("ai variables")
+@export var move_speed = 200  # Pixels per second
+@export var ai_camera: Camera2D
 var move_distance: float = 128  # Distance to move in one step (should match grid size)
+
 
 var is_moving = false
 var target_position = Vector2.ZERO
 var directions = []
 var current_direction_index = 0
+var score = 0
+#var score = Global.ai_score
 
 func _ready():
+	print("AI script waiting for main script to finish...")
+	# Wait until main script is ready
+	while not main_script.is_ready:
+		await get_tree().process_frame  # Wait for the next frame
+	
+	print("AI script running after main script.")
 	if tilemap:
 		# Get tile size from the TileMap
 		var tile_size = tilemap.tile_set.tile_size
-		print("Tile Size: ", tile_size)
+		#print("Tile Size: ", tile_size)
 		
 		# Calculate move_distance based on tile size and scale
 		move_distance = tile_size.x * tilemap.scale.x
-		print("Move Distance: ", move_distance)
+		player.move_distance = move_distance
+		#print("Move Distance: ", move_distance)
 		
 		# Set the AI's position to the center of the first grid cell
 		var grid_center = Vector2(
 			move_distance / 2,  # Center of the first cell horizontally
 			move_distance / 2   # Center of the first cell vertically
 		)
+		
 		position = grid_center
-		print("AI Position: ", position)
+		player.position = grid_center
+		player.position.y -= 30
+		if ai_camera:
+			ai_camera.position = grid_center
+		#print("Start Position: ", position)
 	
 	target_position = position
 	
-	# Example: Set directions for the AI to follow
-	var ai_directions = [
-		Vector2(1, 0),  # RIGHT
-		Vector2(0, 1),  # DOWN
-		Vector2(0, 1),  # DOWN
-		Vector2(1, 0),  # RIGHT
-		Vector2(1, 0),  # RIGHT
-		Vector2(0, 1),  # DOWN
-		Vector2(0, 1)   # DOWN
-	]
-	set_directions(ai_directions)
+	print("current level: " ,Global.level)
+	# call the level function to call the global script
+	if Global.level == 1:
+		level_1(Global.MAZE1)
+	elif Global.level == 2:
+		level_2(Global.MAZE2)
+	elif Global.level == 3:
+		level_3(Global.MAZE3)
+
+func level_1(maze):
+	var x = 0
+	var y = 0
+	var full_path = Level1Algo.algo(maze, x, y)
+
+	print("Full path: ", full_path)
+	
+	var directions = Level1Algo.path_to_directions(full_path)
+	print("Directions: ", directions, " length: ", len(directions))
+	set_directions(convert_directions_to_vectors(directions))
+
+func level_2(maze):
+	var start_x = 0
+	var start_y = 0
+	var full_path = Level2Algo.algo(maze, start_x, start_y)
+	print("Full path: ", full_path)
+	var directions = Level2Algo.path_to_directions(full_path)
+	print("Directions: ", directions, " length: ", len(directions))
+	set_directions(convert_directions_to_vectors(directions))
+	
+func level_3(maze):
+	directions = Level3Algo.get_ai_directions(maze)
+	print("directions: ", directions, " length: ", len(directions))
+	set_directions(convert_directions_to_vectors(directions))
 
 func _process(delta):
 	if is_moving:
 		move_toward_target(delta)
 	elif directions.size() > 0 and current_direction_index < directions.size():
 		attempt_move(directions[current_direction_index])
+
+# Convert direction names to movement vectors
+func convert_directions_to_vectors(direction_names):
+	var direction_map = {
+		"Up": Vector2(0, -1),
+		"Down": Vector2(0, 1),
+		"Left": Vector2(-1, 0),
+		"Right": Vector2(1, 0)
+	}
+	var direction_vectors = []
+	for dir in direction_names:
+		if dir in direction_map:
+			direction_vectors.append(direction_map[dir])
+	return direction_vectors
 
 # Attempt to move in a specific direction
 func attempt_move(direction):
@@ -56,7 +111,7 @@ func attempt_move(direction):
 			target_position = new_target
 			is_moving = true
 			current_direction_index += 1  # Move to the next direction in the list
-
+	
 # Move toward the target position
 func move_toward_target(delta):
 	var direction = (target_position - position).normalized()
@@ -90,3 +145,13 @@ func is_position_valid(position):
 func set_directions(new_directions):
 	directions = new_directions
 	current_direction_index = 0  # Reset the direction index
+
+func _on_area_2d_area_entered(body):
+	if body.is_in_group("coin"):
+		score += 1
+		print("AI score: ", score)
+		body.queue_free()
+	if body.is_in_group("key"):
+		body.queue_free()
+		print("AI score: ", score)
+		score += 10
