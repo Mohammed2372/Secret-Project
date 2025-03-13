@@ -9,6 +9,8 @@ extends CharacterBody2D
 @export var ai_camera: Camera2D
 var move_distance: float = 128  # Distance to move in one step (should match grid size)
 
+@onready var animation: AnimationPlayer = $SubViewportContainer2/SubViewport/Skeleton_Mage/AnimationPlayer
+@onready var ai: Node3D = $SubViewportContainer2/SubViewport/Skeleton_Mage
 
 var is_moving = false
 var target_position = Vector2.ZERO
@@ -41,7 +43,9 @@ func _ready():
 		)
 		
 		position = grid_center
+		position.y -= 30
 		player.position = grid_center
+		
 		player.position.y -= 30
 		if ai_camera:
 			ai_camera.position = grid_center
@@ -68,19 +72,19 @@ func level_1(maze):
 	var directions = Level1Algo.path_to_directions(full_path)
 	print("Directions: ", directions, " length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
-
+	
 func level_2(maze):
+	directions = Level3Algo.get_ai_directions(maze)
+	print("directions: ", directions, " length: ", len(directions))
+	set_directions(convert_directions_to_vectors(directions))
+
+func level_3(maze):
 	var start_x = 0
 	var start_y = 0
 	var full_path = Level2Algo.algo(maze, start_x, start_y)
 	print("Full path: ", full_path)
 	var directions = Level2Algo.path_to_directions(full_path)
 	print("Directions: ", directions, " length: ", len(directions))
-	set_directions(convert_directions_to_vectors(directions))
-	
-func level_3(maze):
-	directions = Level3Algo.get_ai_directions(maze)
-	print("directions: ", directions, " length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 
 func _process(delta):

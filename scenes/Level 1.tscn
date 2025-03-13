@@ -49,7 +49,7 @@ tile_set = SubResource("TileSet_6xnft")
 
 [node name="AI Bot" parent="." node_paths=PackedStringArray("main_script", "tilemap", "player", "ai_camera") instance=ExtResource("4_6dvvm")]
 position = Vector2(62, 66)
-scale = Vector2(0.7, 0.7)
+scale = Vector2(0.14, 0.14)
 collision_layer = 0
 collision_mask = 63
 main_script = NodePath("..")
@@ -58,7 +58,6 @@ player = NodePath("../Player3d")
 ai_camera = NodePath("../Player3d/Camera")
 
 [node name="Player3d" parent="." node_paths=PackedStringArray("main") instance=ExtResource("8_dyqk6")]
-z_index = 5
 position = Vector2(-11, -31)
 scale = Vector2(0.14033, 0.14033)
 collision_layer = 128

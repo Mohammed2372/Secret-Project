@@ -1,96 +1,164 @@
-extends Node2D
+extends Node
 
-# Movement directions (Up, Down, Left, Right)
-var dy = [-1, 1, 0, 0]
-var dx = [0, 0, -1, 1]
+#var dirs = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+var dirs = [Vector2(-1,0), Vector2(1,0), Vector2(0,-1), Vector2(0,1)]
+var dir_names = ["Up", "Down", "Left", "Right"]
 
-# BFS function to find shortest path to the nearest 'C' cell
-func bfs(maze: Array, start_x: int, start_y: int) -> Array:
-	var n = maze.size()
-	var m = maze[0].size()
-	var visited = []
-	var parent = {}  # Dictionary to track the parent of each cell
+func find_coin_locations(maze: Array) -> Dictionary:
+	var coins = []
+	var start = null
+	
+	for i in range(maze.size()):
+		for j in range(maze[i].size()):
+			if maze[i][j] == "C":
+				coins.append(Vector2(i, j))
+			elif maze[i][j] == "S":
+				start = Vector2(i, j)
+	
+	return {"start": start, "coins": coins}
 
-	# Initialize visited array
-	for i in range(n):
-		visited.append([])
-		for j in range(m):
-			visited[i].append(false)
-
-	var queue = []
-	queue.append(Vector2(start_x, start_y))
-	visited[start_x][start_y] = true
-	parent[Vector2(start_x, start_y)] = null  # Start cell has no parent
-
+func bfs_with_path(maze: Array, start: Vector2, target: Vector2) -> Array:
+	var rows = maze.size()
+	var cols = maze[0].size()
+	var queue = [start]
+	var parent = {}
+	parent[start] = null
+	
 	while queue.size() > 0:
-		var p = queue.pop_front()
-		var x = int(p.x)
-		var y = int(p.y)
-
+		var current = queue.pop_front()
+		
+		if current == target:
+			var path = []
+			var node = target
+			while node != null:
+				path.push_front(node)
+				node = parent.get(node)
+			return path
+		
 		for i in range(4):
-			var ny = y + dy[i]
-			var nx = x + dx[i]
+			var next_pos = current + dirs[i]
+			if next_pos.x >= 0 and next_pos.x < rows and next_pos.y >= 0 and next_pos.y < cols and maze[next_pos.x][next_pos.y] != "#" and not parent.has(next_pos):
+				parent[next_pos] = current
+				queue.append(next_pos)
+	
+	return []
 
-			if ny >= 0 and ny < n and nx >= 0 and nx < m and not visited[nx][ny] and maze[nx][ny] != "#":
-				visited[nx][ny] = true
-				parent[Vector2(nx, ny)] = Vector2(x, y)  # Set parent of (nx, ny) to (x, y)
-				queue.append(Vector2(nx, ny))
+func build_distance_matrix(maze: Array, coins: Array, start: Vector2) -> Array:
+	var k = coins.size()
+	var dist = []
+	
+	for i in range(k + 1):
+		dist.append([])
+		for j in range(k + 1):
+			dist[i].append(100000)
+	
+	for i in range(k):
+		var path = bfs_with_path(maze, start, coins[i])
+		if path.size() > 0:
+			dist[0][i + 1] = path.size() - 1
+			dist[i + 1][0] = path.size() - 1
+	
+	for i in range(k):
+		for j in range(k):
+			if i == j:
+				dist[i + 1][j + 1] = 0
+			else:
+				var path = bfs_with_path(maze, coins[i], coins[j])
+				if path.size() > 0:
+					dist[i + 1][j + 1] = path.size() - 1
+	
+	return dist
 
-				if maze[nx][ny] == "C":
-					return reconstruct_path(parent, nx, ny)  # Return reconstructed path
-
-	return []  # Return empty path if no 'C' is found
-
-# Reconstruct path from (x, y) to start using parent dictionary
-func reconstruct_path(parent: Dictionary, x: int, y: int) -> Array:
+func tsp_with_path(dist: Array, n: int) -> Dictionary:
+	var dp = []
+	var parent = []
+	
+	for i in range(1 << n):
+		dp.append([])
+		parent.append([])
+		for j in range(n):
+			dp[i].append(100000)
+			parent[i].append(-1)
+	
+	dp[1][0] = 0
+	
+	for mask in range(1 << n):
+		for u in range(n):
+			if not (mask & (1 << u)):
+				continue
+			for v in range(n):
+				if u == v or not (mask & (1 << v)):
+					continue
+				if dp[mask ^ (1 << u)][v] + dist[v][u] < dp[mask][u]:
+					dp[mask][u] = dp[mask ^ (1 << u)][v] + dist[v][u]
+					parent[mask][u] = v
+	
+	var final_mask = (1 << n) - 1
+	var min_cost = 100000
+	var last_city = -1
+	
+	for u in range(1, n):
+		if dp[final_mask][u] + dist[u][0] < min_cost:
+			min_cost = dp[final_mask][u] + dist[u][0]
+			last_city = u
+	
 	var path = []
-	var current = Vector2(x, y)
+	if last_city != -1:
+		var mask = final_mask
+		var u = last_city
+		while u != -1:
+			path.push_front(u)
+			var prev_u = parent[mask][u]
+			mask ^= (1 << u)
+			u = prev_u
+	
+	return {"cost": min_cost, "path": path}
 
-	while current != null:
-		path.append(current)
-		current = parent.get(current, null)
-
-	path.reverse()  # Reverse to get path from start to target
-	return path
-
-# Algorithm to find all 'C' cells one by one
-func algo(maze: Array, start_x: int, start_y: int) -> Array:
+func get_full_path(maze: Array, coins: Array, coin_order: Array, start: Vector2) -> Array:
 	var full_path = []
-	var x = start_x
-	var y = start_y
-
-	while true:
-		# Find shortest path to the nearest 'C'
-		var path = bfs(maze, x, y)
-		if path.is_empty():
-			break  # No more 'C' cells found
-
-		# Append the path to full_path
-		full_path.append_array(path)
-
-		# Update position to the last 'C' found
-		x = path[-1].x
-		y = path[-1].y
-
-		# Mark current 'C' as visited or block it to avoid revisiting
-		maze[x][y] = "#"
-
+	
+	var first_coin_index = coin_order[1] - 1
+	var start_to_first = bfs_with_path(maze, start, coins[first_coin_index])
+	if start_to_first.size() > 0:
+		full_path.append_array(start_to_first)
+	
+	for i in range(1, coin_order.size() - 1):
+		var from_index = coin_order[i] - 1
+		var to_index = coin_order[i + 1] - 1
+		var segment_path = bfs_with_path(maze, coins[from_index], coins[to_index])
+		if segment_path.size() > 0:
+			full_path.append_array(segment_path)
+	
+	var last_coin_index = coin_order.back() - 1
+	var last_to_start = bfs_with_path(maze, coins[last_coin_index], start)
+	if last_to_start.size() > 0:
+		full_path.append_array(last_to_start)
+	
 	return full_path
 
-# Convert path coordinates to movement directions
 func path_to_directions(path: Array) -> Array:
 	var directions = []
 	for i in range(1, path.size()):
 		var dx = path[i].x - path[i - 1].x
 		var dy = path[i].y - path[i - 1].y
-		
-		if dx == 1:
-			directions.append("Down")
-		elif dx == -1:
-			directions.append("Up")
-		elif dy == 1:
-			directions.append("Right")
-		elif dy == -1:
-			directions.append("Left")
+		for j in range(4):
+			if dirs[j] == Vector2(dx, dy):
+				directions.append(dir_names[j])
+				break
+	return directions
+
+func get_ai_directions(maze: Array) -> Array:
+	var data = find_coin_locations(maze)
+	var start = data["start"]
+	var coins = data["coins"]
 	
+	if start == null or coins.size() == 0:
+		return []
+	
+	var dist = build_distance_matrix(maze, coins, start)
+	var tsp_result = tsp_with_path(dist, coins.size() + 1)
+	var coin_order = tsp_result["path"]
+	var full_path = get_full_path(maze, coins, coin_order, start)
+	var directions = path_to_directions(full_path)
+	print("disatnce: ", dist)
 	return directions

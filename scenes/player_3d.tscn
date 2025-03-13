@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://0t2ijiodrki1"]
 
 [ext_resource type="Script" uid="uid://bb0gqkqm2mhhw" path="res://scripts/player_3d.gd" id="1_reoop"]
-[ext_resource type="PackedScene" uid="uid://d2xgn3lr5t13l" path="res://scenes/skeleton_minion.tscn" id="2_reoop"]
+[ext_resource type="PackedScene" uid="uid://fea66eepeb57" path="res://scenes/skeleton_warrior.tscn" id="2_reoop"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_reoop"]
 radius = 164.0
@@ -27,16 +27,17 @@ handle_input_locally = false
 size = Vector2i(1024, 1024)
 render_target_update_mode = 4
 
-[node name="Skeleton_Minion" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_reoop")]
-
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.828637, 0.559786, 0, -0.559786, 0.828637, 0, 3, 3)
+transform = Transform3D(1, 0, 0, 0, 0.863096, 0.50504, 0, -0.50504, 0.863096, 6.6308, 2.88858, 2.61216)
 projection = 1
-size = 2.54254
+size = 2.93228
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.81848, 1.56955, 3.47096)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.81232, 1.56955, 3.47096)
 light_energy = 0.7
+
+[node name="Skeleton_Warrior" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_reoop")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6308, 0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 131)

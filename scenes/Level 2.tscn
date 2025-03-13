@@ -60,7 +60,7 @@ player = NodePath("../Player3d")
 ai_camera = NodePath("../Player3d/Camera")
 
 [node name="Player3d" parent="." node_paths=PackedStringArray("main") instance=ExtResource("7_b2xu7")]
-position = Vector2(-11, -13)
+position = Vector2(-11, -31)
 scale = Vector2(0.14033, 0.14033)
 collision_layer = 128
 collision_mask = 3

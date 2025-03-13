@@ -3,8 +3,8 @@ extends Node2D  # Use Node2D as the base since we're working in 2D space
 @export var main: Node2D  # Reference to the main game node
 @export var move_speed = 200  # Movement speed in pixels per second
 
-@onready var animation: AnimationPlayer = $SubViewportContainer/SubViewport/Skeleton_Minion/AnimationPlayer
-@onready var player: Node3D = $SubViewportContainer/SubViewport/Skeleton_Minion
+@onready var animation: AnimationPlayer = $SubViewportContainer/SubViewport/Skeleton_Warrior/AnimationPlayer
+@onready var player: Node3D = $SubViewportContainer/SubViewport/Skeleton_Warrior
 
 var move_distance: float = 128  # Distance to move in one step (should match grid size)
 var is_moving = false  # Whether the player is currently moving

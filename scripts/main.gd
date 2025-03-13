@@ -31,7 +31,7 @@ func _ready():
 	ai_score = ai.score
 	
 	## setting for the second camera
-	## TODO: make the new camera for the player and make the two cameras shows in the scene
+	
 	
 	## current level
 	if Global.level == 1:
