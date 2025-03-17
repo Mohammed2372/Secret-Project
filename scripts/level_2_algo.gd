@@ -36,10 +36,10 @@ func bfs(maze: Array, start_x: int, start_y: int) -> Array:
 				parent[Vector2(nx, ny)] = Vector2(x, y)  # Set parent of (nx, ny) to (x, y)
 				queue.append(Vector2(nx, ny))
 
-				if maze[nx][ny] == "C":
+				if maze[nx][ny] == "C" or maze[nx][ny] == "B":
 					return reconstruct_path(parent, nx, ny)  # Return reconstructed path
 
-	return []  # Return empty path if no 'C' is found
+	return []  # Return empty path if no 'C' or 'B' is found
 
 # Reconstruct path from (x, y) to start using parent dictionary
 func reconstruct_path(parent: Dictionary, x: int, y: int) -> Array:

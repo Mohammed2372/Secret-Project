@@ -13,6 +13,8 @@ height = 506.0
 
 [node name="AI Bot" type="CharacterBody2D"]
 z_index = 5
+collision_layer = 64
+collision_mask = 19
 script = ExtResource("1_omnam")
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
@@ -35,13 +37,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73462, 3.20604)
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer2/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.835021, 0.550219, 0, -0.550219, 0.835021, 0, 3.17235, 3)
 projection = 1
-size = 2.54254
+size = 2.80947
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 131)
 shape = SubResource("CapsuleShape2D_fkgjq")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 19
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 132)

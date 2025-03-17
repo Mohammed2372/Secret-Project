@@ -6,7 +6,6 @@ extends CharacterBody2D
 @export var player: CharacterBody2D
 @export_category("ai variables")
 @export var move_speed = 200  # Pixels per second
-@export var ai_camera: Camera2D
 var move_distance: float = 128  # Distance to move in one step (should match grid size)
 
 @onready var animation: AnimationPlayer = $SubViewportContainer2/SubViewport/Skeleton_Mage/AnimationPlayer
@@ -42,13 +41,12 @@ func _ready():
 			move_distance / 2   # Center of the first cell vertically
 		)
 		
-		position = grid_center
-		position.y -= 30
-		player.position = grid_center
+		# set ai and player position in the grids
+		#position = grid_center
+		#position.y -= 30
+		#player.position = grid_center
+		#player.position.y -= 30
 		
-		player.position.y -= 30
-		if ai_camera:
-			ai_camera.position = grid_center
 		#print("Start Position: ", position)
 	
 	target_position = position
@@ -61,6 +59,15 @@ func _ready():
 		level_2(Global.MAZE2)
 	elif Global.level == 3:
 		level_3(Global.MAZE3)
+	
+	## animation
+	#animation.play("Idle")
+
+func _process(delta):
+	if is_moving:
+		move_toward_target(delta)
+	elif directions.size() > 0 and current_direction_index < directions.size():
+		attempt_move(directions[current_direction_index])
 
 func level_1(maze):
 	var x = 0
@@ -87,12 +94,6 @@ func level_3(maze):
 	print("Directions: ", directions, " length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 
-func _process(delta):
-	if is_moving:
-		move_toward_target(delta)
-	elif directions.size() > 0 and current_direction_index < directions.size():
-		attempt_move(directions[current_direction_index])
-
 # Convert direction names to movement vectors
 func convert_directions_to_vectors(direction_names):
 	var direction_map = {
@@ -115,6 +116,9 @@ func attempt_move(direction):
 			target_position = new_target
 			is_moving = true
 			current_direction_index += 1  # Move to the next direction in the list
+			## animation
+			animation.play("Running_C")
+			rotate_toward_direction(direction)
 	
 # Move toward the target position
 func move_toward_target(delta):
@@ -129,6 +133,19 @@ func move_toward_target(delta):
 		position = target_position  # Snap to the target position
 		is_moving = false  # Stop moving
 		velocity = Vector2.ZERO  # Reset velocity
+		## animation
+		#animation.play("Idle")
+
+# Rotate the AI toward the movement direction
+func rotate_toward_direction(direction: Vector2):
+	if direction == Vector2.UP:
+		ai.rotation.y = deg_to_rad(180)  # Facing up
+	elif direction == Vector2.DOWN:
+		ai.rotation.y = deg_to_rad(0)  # Facing down
+	elif direction == Vector2.LEFT:
+		ai.rotation.y = deg_to_rad(-90)  # Facing left
+	elif direction == Vector2.RIGHT:
+		ai.rotation.y = deg_to_rad(90)  # Facing right
 
 # Check if a position is valid (e.g., not blocked by walls or obstacles)
 func is_position_valid(position):
@@ -156,6 +173,6 @@ func _on_area_2d_area_entered(body):
 		print("AI score: ", score)
 		body.queue_free()
 	if body.is_in_group("key"):
-		body.queue_free()
-		print("AI score: ", score)
 		score += 10
+		print("AI score: ", score)
+		body.queue_free()

@@ -35,7 +35,7 @@ func bfs(maze, x, y):
 		var cx = p.x
 		var cy = p.y
 
-		if maze[cx][cy] == 'C' and dis[cx][cy] > max_distance:
+		if (maze[cx][cy] == 'C' or maze[cx][cy] == 'B') and dis[cx][cy] > max_distance:
 			max_distance = dis[cx][cy]
 			target = Vector2(cx, cy)
 

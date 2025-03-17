@@ -10,7 +10,7 @@ func find_coin_locations(maze: Array) -> Dictionary:
 	
 	for i in range(maze.size()):
 		for j in range(maze[i].size()):
-			if maze[i][j] == "C":
+			if maze[i][j] == "C" or maze[i][j] == "B":
 				coins.append(Vector2(i, j))
 			elif maze[i][j] == "S":
 				start = Vector2(i, j)

@@ -70,8 +70,10 @@ animations = [{
 radius = 3.0
 height = 12.0
 
-[node name="key" type="Node2D"]
+[node name="key" type="Area2D" groups=["key"]]
 scale = Vector2(8, 8)
+collision_layer = 16
+collision_mask = 192
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-8, -8)
@@ -79,10 +81,7 @@ sprite_frames = SubResource("SpriteFrames_ja63q")
 autoplay = "default"
 frame_progress = 0.881559
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-8, -8)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" groups=["key"]]
-position = Vector2(0, -1)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-8, -9)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_1khgy")
