@@ -1,11 +1,30 @@
 extends Control
 
+## buttons
+@onready var level1 = $"levels_container/Level1"
+@onready var level2 = $"levels_container/Level2"
+@onready var level3 = $"levels_container/Level3"
+@onready var level4 = $"levels_container/Level4"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	## hide levels menu
+	#hide()
+	
+	## Connect buttons to respective functions
+	level1.connect("pressed", Callable(self, "_on_level_1_button_pressed"))
+	level2.connect("pressed", Callable(self, "_on_level_2_button_pressed"))
+	level3.connect("pressed", Callable(self, "_on_level_3_button_pressed"))
+	level4.connect("pressed", Callable(self, "_on_level_4_button_pressed"))
 
+func _on_level_1_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/Level 1.tscn")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _on_level_2_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/Level 2.tscn")
+
+func _on_level_3_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/Level 3.tscn")
+
+func _on_level_4_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/Level 4.tscn")

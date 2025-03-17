@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://tn4krxcif16"]
+[gd_scene load_steps=4 format=3 uid="uid://tn4krxcif16"]
 
 [ext_resource type="Script" uid="uid://cewag2txdq34d" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+[ext_resource type="Shader" path="res://assets/shaders/pause menu.gdshader" id="2_myx47"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kukqi"]
+shader = ExtResource("2_myx47")
+shader_parameter/amount = 0.0
 
 [node name="pause menu" type="Control"]
 layout_mode = 3
@@ -10,3 +15,48 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_n87rw")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kukqi")
+layout_mode = 0
+offset_left = -25.0
+offset_top = -23.0
+offset_right = 1174.0
+offset_bottom = 674.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = -159.0
+offset_right = 191.0
+offset_bottom = 159.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="Resume button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.111962, 0.340462, 0.964085, 1)
+theme_override_font_sizes/font_size = 40
+text = "Resume"
+
+[node name="Restart button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Restart"
+
+[node name="Level menu button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Levels menu"
+
+[node name="Main menu button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Main menu"
