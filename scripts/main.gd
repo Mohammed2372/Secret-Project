@@ -86,15 +86,31 @@ func _process(delta):
 	## handle if round ends
 	if round_end:
 		print("round end is true !")
-		if player_score < ai_score:
+		if player_score > ai_score:
 			print("Player wins")
 		elif ai_score > player_score:
 			print("Ai wins")
 		else:
-			print("Draw")
+			print("Draw")  # this one will never happen
 		
-		## change to next round
+		## wait for 2 seconds before chenging the level
+		## TODO: freeze level and make the panel show to show who wins the game and to processed to next level and also show the score
 		
+		## TODO: make some panel show with button to go next level
+		
+		## change to next level (in the panel script connected with the button)
+		if Global.level == 1:
+			get_tree().change_scene_to_file("res://scenes/Level 2.tscn")
+			print("you are at level 1 travelling you to level 2")
+		elif Global.level == 2:
+			print("you are at level 2 travelling you to level 3")
+			get_tree().change_scene_to_file("res://scenes/Level 3.tscn")
+		elif Global.level == 3:
+			print("you are at level 3 travelling you to last level")
+			#get_tree().change_scene_to_file("res://scenes/Level 4.tscn")
+		elif Global.level == 4:
+			print("you are at last level travelling you to menu levels")
+			#get_tree().change_scene_to_file("res://scenes/menu_level.tscn")
 	
 	# Update camera positions to follow their targets
 	if player_camera and player:

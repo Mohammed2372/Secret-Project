@@ -72,7 +72,6 @@ main = NodePath("..")
 [node name="PlayerCamera" type="Camera2D" parent="."]
 position = Vector2(3356, 1447)
 scale = Vector2(0.999997, 0.999997)
-zoom = Vector2(0.155, 0.155)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
