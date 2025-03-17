@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://derdbxqh3djd6"]
+[gd_scene load_steps=12 format=4 uid="uid://derdbxqh3djd6"]
 
 [ext_resource type="Script" uid="uid://btyvgfvvssw45" path="res://scripts/main.gd" id="1_4etrk"]
 [ext_resource type="Texture2D" uid="uid://du0dr7ink8m7a" path="res://assets/maze_sprites.PNG" id="2_40p5o"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cbwgf6puy0me0" path="res://scenes/key.tscn" id="4_acanq"]
 [ext_resource type="PackedScene" uid="uid://pqerpfydlepk" path="res://scenes/ai_bot.tscn" id="4_jcrop"]
 [ext_resource type="PackedScene" uid="uid://0t2ijiodrki1" path="res://scenes/player_3d.tscn" id="7_b2xu7"]
+[ext_resource type="PackedScene" uid="uid://0l3ugkwwib1m" path="res://scenes/win_panel.tscn" id="8_t3p7j"]
+[ext_resource type="PackedScene" uid="uid://tn4krxcif16" path="res://scenes/pause_menu.tscn" id="9_7mr7b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_arbk7"]
 texture = ExtResource("2_40p5o")
@@ -92,3 +94,17 @@ render_target_update_mode = 4
 
 [node name="AICamera" type="Camera2D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
 position = Vector2(2734, 313)
+
+[node name="win panel" parent="CanvasLayer" instance=ExtResource("8_t3p7j")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="pause menu" parent="CanvasLayer" instance=ExtResource("9_7mr7b")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5

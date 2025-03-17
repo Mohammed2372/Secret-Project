@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://crxekajrsafq3"]
+[gd_scene load_steps=12 format=4 uid="uid://crxekajrsafq3"]
 
 [ext_resource type="Script" uid="uid://btyvgfvvssw45" path="res://scripts/main.gd" id="1_sqrxn"]
 [ext_resource type="PackedScene" uid="uid://jrbe88mma876" path="res://scenes/block.tscn" id="2_28jt5"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://cbwgf6puy0me0" path="res://scenes/key.tscn" id="4_3o81x"]
 [ext_resource type="PackedScene" uid="uid://pqerpfydlepk" path="res://scenes/ai_bot.tscn" id="4_6dvvm"]
 [ext_resource type="PackedScene" uid="uid://0t2ijiodrki1" path="res://scenes/player_3d.tscn" id="8_dyqk6"]
+[ext_resource type="PackedScene" uid="uid://0l3ugkwwib1m" path="res://scenes/win_panel.tscn" id="8_wfl0k"]
+[ext_resource type="PackedScene" uid="uid://tn4krxcif16" path="res://scenes/pause_menu.tscn" id="9_wfl0k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ae40"]
 texture = ExtResource("2_huc34")
@@ -90,3 +92,17 @@ render_target_update_mode = 4
 
 [node name="AICamera" type="Camera2D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
 position = Vector2(2734, 313)
+
+[node name="win panel" parent="CanvasLayer" instance=ExtResource("8_wfl0k")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="pause menu" parent="CanvasLayer" instance=ExtResource("9_wfl0k")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
