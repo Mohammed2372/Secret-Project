@@ -23,6 +23,9 @@ extends Node2D
 @onready var ai_viewport_container = $CanvasLayer/SubViewportContainer
 @onready var ai_viewport = $CanvasLayer/SubViewportContainer/SubViewport
 
+# reference for win panel
+@onready var win_panel = $"CanvasLayer/win panel"
+
 # variables
 var is_ready = false
 var player_score
