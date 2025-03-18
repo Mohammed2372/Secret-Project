@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://tn4krxcif16"]
 
-[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_n87rw"]
-[ext_resource type="Shader" path="res://assets/shaders/pause menu.gdshader" id="2_myx47"]
+[ext_resource type="Script" uid="uid://cewag2txdq34d" path="res://scripts/pause_menu.gd" id="1_n87rw"]
+[ext_resource type="Shader" uid="uid://clliixktor4k6" path="res://assets/shaders/pause menu.gdshader" id="2_myx47"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kukqi"]
 shader = ExtResource("2_myx47")

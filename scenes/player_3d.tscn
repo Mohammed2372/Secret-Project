@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://0t2ijiodrki1"]
 
-[ext_resource type="Script" path="res://scripts/player_3d.gd" id="1_reoop"]
+[ext_resource type="Script" uid="uid://bb0gqkqm2mhhw" path="res://scripts/player_3d.gd" id="1_reoop"]
 [ext_resource type="PackedScene" uid="uid://fea66eepeb57" path="res://scenes/skeleton_warrior.tscn" id="2_reoop"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_reoop"]

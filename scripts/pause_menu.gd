@@ -34,6 +34,7 @@ func toggle_pause():
 		get_tree().paused = false  
 	else:
 		show()
+		$"VBoxContainer/Resume button".grab_focus()
 		get_tree().paused = true 
 
 ## resume
@@ -41,7 +42,7 @@ func resume_pressed():
 	toggle_pause()
 
 ## restart
-func _on_restart_game():
+func restart_pressed():
 	print("restart button pressed")
 	get_tree().paused = false
 	var timer = get_tree().create_timer(0.1)  # Small delay
@@ -50,13 +51,13 @@ func _on_restart_game():
 	)
 	
 ## levels menu
-func _on_go_to_levels_menu():
+func levels_menu_presses():
 	print("levels menu button pressed")
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/menu_levels.tscn")
 
 ## main menu
-func _on_go_to_main_menu():
+func mainmenu_pressed():
 	print("main menu button pressed")
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

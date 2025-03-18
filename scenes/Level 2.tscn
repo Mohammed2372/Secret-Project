@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=4 uid="uid://derdbxqh3djd6"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_4etrk"]
+[ext_resource type="Script" uid="uid://btyvgfvvssw45" path="res://scripts/main.gd" id="1_4etrk"]
 [ext_resource type="Texture2D" uid="uid://du0dr7ink8m7a" path="res://assets/maze_sprites.PNG" id="2_40p5o"]
 [ext_resource type="PackedScene" uid="uid://jrbe88mma876" path="res://scenes/block.tscn" id="2_d0sdx"]
 [ext_resource type="PackedScene" uid="uid://brgttitstv6wm" path="res://scenes/coin.tscn" id="3_lr6kn"]

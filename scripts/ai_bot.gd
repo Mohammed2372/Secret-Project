@@ -73,7 +73,7 @@ func _process(delta):
 		attempt_move(directions[current_direction_index])
 	
 	## handle score
-	if score == Global.max_score:
+	if score >= Global.max_score:
 		main_script.round_end = true
 
 func level_1(maze):

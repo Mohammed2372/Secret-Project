@@ -28,7 +28,7 @@ func _process(delta):
 		handle_input()
 
 	# Handle score
-	if score == Global.max_score:
+	if score >= Global.max_score:
 		main.round_end = true
 
 # Handle player input and play animations
@@ -52,6 +52,7 @@ func rotate_move_anim(direction):
 		rotate_player(direction)
 		attempt_move(direction)
 		animation.play("Running_A")
+
 # Rotate the 3D player model to face the movement direction
 func rotate_player(direction: Vector2):
 	if direction == Vector2.UP:

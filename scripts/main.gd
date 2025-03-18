@@ -185,11 +185,11 @@ func setup_static_ai_camera():
 func show_win_scene():
 	get_tree().paused = true
 	win_scene.show_win_screen(Global.player_score, Global.ai_score)
-	
+
 func _on_next_level():
 	print("next level button pressed")
-	get_tree().paused = false  # Unpause the game
-	load_next_level()  # Load the next level
+	get_tree().paused = false
+	load_next_level()
 
 func load_next_level():
 	# Logic to determine and load the next level

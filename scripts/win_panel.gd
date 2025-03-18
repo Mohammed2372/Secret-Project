@@ -10,7 +10,7 @@ signal next_level
 
 func _ready():
 	hide()  # Hide initially
-	next_level_button.connect("pressed", Callable(self, "_on_next_level_pressed"))
+	next_level_button.pressed.connect(_on_next_level_pressed)
 
 ## Function to update score and show win screen
 func show_win_screen(player_score: int, ai_score: int):
