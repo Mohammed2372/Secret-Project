@@ -23,16 +23,16 @@ extends Node2D
 @onready var ai_viewport_container = $CanvasLayer/SubViewportContainer
 @onready var ai_viewport = $CanvasLayer/SubViewportContainer/SubViewport
 
-# reference for win panel
-@onready var win_panel = $"CanvasLayer/win panel"
+# references to ui scenes
+@onready var pause_menu: Control = $"CanvasLayer/pause menu"
+@onready var win_scene: Control = $"CanvasLayer/win panel"
 
 # variables
 var is_ready = false
-var player_score
-var ai_score
 var round_end = false
 var maze_width = 0  # To store the width of the maze for offset calculation
 var maze_height = 0
+var is_paused = false
 
 func _ready():
 	print("Main script running...")
@@ -45,10 +45,6 @@ func _ready():
 	Global.level = $".".name.to_int()
 	print("current level is: ", Global.level)
 	
-	## player and ai scores initalization
-	player_score = player.score
-	ai_score = ai.score
-	
 	## set up player camera
 	player_camera.make_current()  # Make it the main camera
 	player_camera.position = player.position  # Initially center on player
@@ -58,7 +54,6 @@ func _ready():
 	ai_viewport.size = ai_viewport_size # to improve quality
 	ai_viewport.msaa_2d = Viewport.MSAA_DISABLED  # Disable anti-aliasing for pixel art
 	ai_viewport_container.custom_minimum_size = ai_viewport_size
-	
 	
 	## current level
 	if Global.level == 1:
@@ -79,9 +74,18 @@ func _ready():
 		maze_height = Global.MAZE3.size()
 		draw_maze(Global.MAZE3, tile_map, false, Vector2.ZERO)
 		draw_maze(Global.MAZE3, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
-	
+	elif Global.level == 4:
+		print("origin shift level")
+		
 	## set ai camera
 	setup_static_ai_camera()
+	
+	## recieve signal from pause menu
+	pause_menu.connect("resume_game", Callable(self, "_on_resume_game"))
+	pause_menu.connect("restart_game", Callable(self, "_on_restart_game"))
+	pause_menu.connect("go_to_levels_menu", Callable(self, "_on_go_to_levels_menu"))
+	pause_menu.connect("go_to_main_menu", Callable(self, "_on_go_to_main_menu"))
+	win_scene.connect("next_level", Callable(self, "_on_next_level"))
 	
 	print("Main script finished setup.")
 
@@ -89,31 +93,18 @@ func _process(delta):
 	## handle if round ends
 	if round_end:
 		print("round end is true !")
-		if player_score > ai_score:
+		if player.score > ai.score:
 			print("Player wins")
-		elif ai_score > player_score:
+		elif ai.score > player.score:
 			print("Ai wins")
 		else:
 			print("Draw")  # this one will never happen
 		
-		## wait for 2 seconds before chenging the level
-		## TODO: freeze level and make the panel show to show who wins the game and to processed to next level and also show the score
+		## show win scene
+		show_win_scene()
 		
-		## TODO: make some panel show with button to go next level
-		
-		## change to next level (in the panel script connected with the button)
-		if Global.level == 1:
-			get_tree().change_scene_to_file("res://scenes/Level 2.tscn")
-			print("you are at level 1 travelling you to level 2")
-		elif Global.level == 2:
-			print("you are at level 2 travelling you to level 3")
-			get_tree().change_scene_to_file("res://scenes/Level 3.tscn")
-		elif Global.level == 3:
-			print("you are at level 3 travelling you to last level")
-			#get_tree().change_scene_to_file("res://scenes/Level 4.tscn")
-		elif Global.level == 4:
-			print("you are at last level travelling you to menu levels")
-			#get_tree().change_scene_to_file("res://scenes/menu_level.tscn")
+		## return round_end to alse agian
+		round_end = false
 	
 	# Update camera positions to follow their targets
 	if player_camera and player:
@@ -122,6 +113,12 @@ func _process(delta):
 	#if ai_camera and ai:
 		#ai_camera.global_position = ai.global_position
 
+## inputs
+func _input(event):
+	if Input.is_action_pressed("ui_cancel"):
+		toggle_pause()
+
+## draw maze
 func draw_maze(maze, target_tilemap, is_ai_maze, offset):
 	var tile_size = Vector2(target_tilemap.tile_set.tile_size) * target_tilemap.scale
 	
@@ -158,6 +155,7 @@ func draw_maze(maze, target_tilemap, is_ai_maze, offset):
 				instance.position = world_pos
 				add_child(instance)
 
+## setup mini camera
 func setup_static_ai_camera():
 	# Calculate the AI maze offset
 	var maze_offset = Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0)
@@ -185,3 +183,80 @@ func setup_static_ai_camera():
 	
 	# Set camera zoom
 	ai_camera.zoom = Vector2(zoom_factor, zoom_factor)
+
+### **Signal Handlers for Pause Menu Buttons**
+## resume
+func _on_resume_game():
+	print("resume button pressed")
+	toggle_pause()
+
+## restart
+func _on_restart_game():
+	print("restart button pressed")
+	get_tree().paused = false
+	
+	if Global.level == 1:
+		get_tree().change_scene_to_file("res://scenes/Level 1.tscn")
+	elif Global.level == 2:
+		get_tree().change_scene_to_file("res://scenes/Level 2.tscn")
+	elif Global.level == 3:
+		get_tree().change_scene_to_file("res://scenes/Level 3.tscn")
+	elif Global.level == 4:
+		get_tree().change_scene_to_file("res://scenes/Level 4.tscn")
+
+## levels menu
+func _on_go_to_levels_menu():
+	print("levels menu button pressed")
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/menu_levels.tscn")
+
+## main menu
+func _on_go_to_main_menu():
+	print("main menu button pressed")
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	
+## pause menu
+func toggle_pause():
+	if pause_menu.visible:  # If pause menu is visible, hide it and resume game
+		pause_menu.hide()
+		get_tree().paused = false
+		print("Game Resumed")
+	else:  # Otherwise, show it and pause game
+		pause_menu.show()
+		$"CanvasLayer/pause menu/VBoxContainer/Resume button".grab_focus()
+		get_tree().paused = true
+		print("Game Paused")
+
+## win scene
+func show_win_scene():
+	get_tree().paused = true
+	win_scene.show_win_screen(Global.player_score, Global.ai_score)
+	
+func _on_next_level():
+	get_tree().paused = false  # Unpause the game
+	load_next_level()  # Load the next level
+
+func load_next_level():
+	# Logic to determine and load the next level
+	var current_scene = get_tree().current_scene.scene_file_path
+	var next_scene = get_next_level_path(current_scene)
+	
+	if next_scene:
+		get_tree().change_scene_to_file(next_scene)
+	else:
+		print("No next level found!")  # Handle when no next level is available
+
+func get_next_level_path(current_scene: String) -> String:
+	var levels = [
+		"res://scenes/Level 1.tscn",
+		"res://scenes/Level 2.tscn",
+		"res://scenes/Level 3.tscn",
+		"res://scenes/Level 4.tscn",
+		"res://scenes/menu_levels.tscn",
+	]
+	
+	var index = levels.find(current_scene)
+	if index != -1 and index + 1 < levels.size():
+		return levels[index + 1]
+	return ""

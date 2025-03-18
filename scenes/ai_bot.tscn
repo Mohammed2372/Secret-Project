@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://pqerpfydlepk"]
 
-[ext_resource type="Script" uid="uid://w1r8pryk4k0" path="res://scripts/ai_bot.gd" id="1_omnam"]
+[ext_resource type="Script" path="res://scripts/ai_bot.gd" id="1_omnam"]
 [ext_resource type="PackedScene" uid="uid://dj0c1hsifkifp" path="res://scenes/skeleton_mage.tscn" id="2_dxq27"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fkgjq"]

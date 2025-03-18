@@ -106,9 +106,11 @@ func is_position_valid(position):
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("coin"):
 		score += 1
-		area.queue_free()
+		Global.player_score += 1
 		print("player score: ", score)
+		area.queue_free()
 	if area.is_in_group("key"):
-		score += 10
+		score += 1
+		Global.player_score += 10
 		print("player score: ", score)
 		area.queue_free()

@@ -6,14 +6,14 @@ var maze1_coins_num = 9
 var maze1_big_coins_num = 2
 
 ## maze 2 variables
-const MAZE2_MAX_SCORE = 54
+const MAZE2_MAX_SCORE = 44
 var maze2_coins_num = 14
-var maze2_big_coins_num = 4
+var maze2_big_coins_num = 3
 
 ## maze 3 variables
-const MAZE3_MAX_SCORE = 79
+const MAZE3_MAX_SCORE = 59
 var maze3_coins_num = 19
-var maze3_big_coins_num = 6
+var maze3_big_coins_num = 4
 
 # Maze matrix ("." = free, "#" = block, "C" = coin, "S" = AI start)
 var MAZE1 = [
@@ -72,4 +72,5 @@ var MAZE3 = [
 
 var level: int = 1
 var max_score = 100
-#var player_score = 0
+var player_score = 0
+var ai_score = 0

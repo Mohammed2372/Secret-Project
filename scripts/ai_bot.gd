@@ -16,7 +16,6 @@ var target_position = Vector2.ZERO
 var directions = []
 var current_direction_index = 0
 var score = 0
-#var score = Global.ai_score
 
 func _ready():
 	print("AI script waiting for main script to finish...")
@@ -68,6 +67,10 @@ func _process(delta):
 		move_toward_target(delta)
 	elif directions.size() > 0 and current_direction_index < directions.size():
 		attempt_move(directions[current_direction_index])
+	
+	## handle score
+	if score == Global.max_score:
+		main_script.round_end = true
 
 func level_1(maze):
 	var x = 0
@@ -170,9 +173,11 @@ func set_directions(new_directions):
 func _on_area_2d_area_entered(body):
 	if body.is_in_group("coin"):
 		score += 1
+		Global.ai_score += 1
 		print("AI score: ", score)
 		body.queue_free()
 	if body.is_in_group("key"):
 		score += 10
+		Global.ai_score += 10
 		print("AI score: ", score)
 		body.queue_free()

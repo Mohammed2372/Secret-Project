@@ -10,6 +10,7 @@ extends Control
 func _ready():
 	## hide levels menu
 	#hide()
+	$levels_container/Level1.grab_focus()
 	
 	## Connect buttons to respective functions
 	level1.connect("pressed", Callable(self, "_on_level_1_button_pressed"))
