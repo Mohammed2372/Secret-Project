@@ -110,7 +110,7 @@ func _on_area_2d_area_entered(area):
 		print("player score: ", score)
 		area.queue_free()
 	if area.is_in_group("key"):
-		score += 1
+		score += 10
 		Global.player_score += 10
 		print("player score: ", score)
 		area.queue_free()
