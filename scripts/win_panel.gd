@@ -21,4 +21,5 @@ func show_win_screen(player_score: int, ai_score: int):
 
 ## Emit signal when next level button is pressed
 func _on_next_level_pressed():
+	print("Next Level Button Pressed")  # Debugging check
 	emit_signal("next_level")

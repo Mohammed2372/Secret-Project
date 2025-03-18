@@ -94,8 +94,10 @@ func _process(delta):
 	if round_end:
 		print("round end is true !")
 		if player.score > ai.score:
+			$"CanvasLayer/win panel/VBoxContainer/congrats".text = "Player won this level"
 			print("Player wins")
 		elif ai.score > player.score:
+			$"CanvasLayer/win panel/VBoxContainer/congrats".text = "AI won this level"
 			print("Ai wins")
 		else:
 			print("Draw")  # this one will never happen
@@ -112,11 +114,6 @@ func _process(delta):
 	
 	#if ai_camera and ai:
 		#ai_camera.global_position = ai.global_position
-
-## inputs
-func _input(event):
-	if Input.is_action_pressed("ui_cancel"):
-		toggle_pause()
 
 ## draw maze
 func draw_maze(maze, target_tilemap, is_ai_maze, offset):
@@ -184,56 +181,13 @@ func setup_static_ai_camera():
 	# Set camera zoom
 	ai_camera.zoom = Vector2(zoom_factor, zoom_factor)
 
-### **Signal Handlers for Pause Menu Buttons**
-## resume
-func _on_resume_game():
-	print("resume button pressed")
-	toggle_pause()
-
-## restart
-func _on_restart_game():
-	print("restart button pressed")
-	get_tree().paused = false
-	
-	if Global.level == 1:
-		get_tree().change_scene_to_file("res://scenes/Level 1.tscn")
-	elif Global.level == 2:
-		get_tree().change_scene_to_file("res://scenes/Level 2.tscn")
-	elif Global.level == 3:
-		get_tree().change_scene_to_file("res://scenes/Level 3.tscn")
-	elif Global.level == 4:
-		get_tree().change_scene_to_file("res://scenes/Level 4.tscn")
-
-## levels menu
-func _on_go_to_levels_menu():
-	print("levels menu button pressed")
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/menu_levels.tscn")
-
-## main menu
-func _on_go_to_main_menu():
-	print("main menu button pressed")
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-	
-## pause menu
-func toggle_pause():
-	if pause_menu.visible:  # If pause menu is visible, hide it and resume game
-		pause_menu.hide()
-		get_tree().paused = false
-		print("Game Resumed")
-	else:  # Otherwise, show it and pause game
-		pause_menu.show()
-		$"CanvasLayer/pause menu/VBoxContainer/Resume button".grab_focus()
-		get_tree().paused = true
-		print("Game Paused")
-
 ## win scene
 func show_win_scene():
 	get_tree().paused = true
 	win_scene.show_win_screen(Global.player_score, Global.ai_score)
 	
 func _on_next_level():
+	print("next level button pressed")
 	get_tree().paused = false  # Unpause the game
 	load_next_level()  # Load the next level
 

@@ -16,20 +16,48 @@ signal go_to_main_menu
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hide()
+	process_mode = Node.PROCESS_MODE_ALWAYS  # Ensure it works when paused
 	## connect buttons to their respective functoins
 	resume_button.connect("pressed", Callable(self, "resume_pressed"))
 	restart_button.connect("pressed", Callable(self, "restart_pressed"))
 	level_menus_button.connect("pressed", Callable(self, "levels_menu_presses"))
 	main_menu_button.connect("pressed", Callable(self, "mainmenu_pressed"))
 
+## inputs
+func _input(event):
+	if Input.is_action_pressed("ui_cancel"):
+		toggle_pause()
+
+func toggle_pause():
+	if visible:
+		hide()
+		get_tree().paused = false  
+	else:
+		show()
+		get_tree().paused = true 
+
+## resume
 func resume_pressed():
-	emit_signal("resume_game")
+	toggle_pause()
 
-func restart_pressed():
-	emit_signal("restart_game")
+## restart
+func _on_restart_game():
+	print("restart button pressed")
+	get_tree().paused = false
+	var timer = get_tree().create_timer(0.1)  # Small delay
+	timer.timeout.connect(func():
+		get_tree().reload_current_scene()
+	)
+	
+## levels menu
+func _on_go_to_levels_menu():
+	print("levels menu button pressed")
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/menu_levels.tscn")
 
-func levels_menu_presses():
-	emit_signal("go_to_levels_menu")
-
-func mainmenu_pressed():
-	emit_signal("go_to_main_menu")
+## main menu
+func _on_go_to_main_menu():
+	print("main menu button pressed")
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	

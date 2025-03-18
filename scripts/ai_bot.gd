@@ -16,6 +16,7 @@ var target_position = Vector2.ZERO
 var directions = []
 var current_direction_index = 0
 var score = 0
+var maze = []
 
 func _ready():
 	print("AI script waiting for main script to finish...")
@@ -53,11 +54,14 @@ func _ready():
 	print("current level: " ,Global.level)
 	# call the level function to call the global script
 	if Global.level == 1:
-		level_1(Global.MAZE1)
+		maze = Global.MAZE1.duplicate(true) # make copy of the maze to avoid modefying on the orignal
+		level_1(maze)
 	elif Global.level == 2:
-		level_2(Global.MAZE2)
+		maze = Global.MAZE2.duplicate(true)
+		level_2(maze)
 	elif Global.level == 3:
-		level_3(Global.MAZE3)
+		maze = Global.MAZE3.duplicate(true)
+		level_3(maze)
 	
 	## animation
 	#animation.play("Idle")
