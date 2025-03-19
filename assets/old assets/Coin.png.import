@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3mb4tokiitl0"
-path="res://.godot/imported/FG_Cellar.png-bc81ef1a2e249928a716902482d9178a.ctex"
+uid="uid://lyq688aa7ayj"
+path="res://.godot/imported/Coin.png-6746836e207deac4b3e5813994f0ad1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/FG_Cellar.png"
-dest_files=["res://.godot/imported/FG_Cellar.png-bc81ef1a2e249928a716902482d9178a.ctex"]
+source_file="res://assets/old assets/Coin.png"
+dest_files=["res://.godot/imported/Coin.png-6746836e207deac4b3e5813994f0ad1b.ctex"]
 
 [params]
 

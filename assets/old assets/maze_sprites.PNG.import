@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2qyds1gtxjn4"
-path="res://.godot/imported/idle.png-600a6709c1a21ab5f528af7b11a02560.ctex"
+uid="uid://du0dr7ink8m7a"
+path="res://.godot/imported/maze_sprites.PNG-a186a08d28b7a5f96dd6ded7318e3db7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/idle.png"
-dest_files=["res://.godot/imported/idle.png-600a6709c1a21ab5f528af7b11a02560.ctex"]
+source_file="res://assets/old assets/maze_sprites.PNG"
+dest_files=["res://.godot/imported/maze_sprites.PNG-a186a08d28b7a5f96dd6ded7318e3db7.ctex"]
 
 [params]
 

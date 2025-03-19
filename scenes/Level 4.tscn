@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://jrbe88mma876" path="res://scenes/block.tscn" id="2_f100q"]
 [ext_resource type="PackedScene" uid="uid://brgttitstv6wm" path="res://scenes/coin.tscn" id="3_wasir"]
 [ext_resource type="PackedScene" uid="uid://cbwgf6puy0me0" path="res://scenes/key.tscn" id="4_wscmj"]
-[ext_resource type="Texture2D" uid="uid://du0dr7ink8m7a" path="res://assets/maze_sprites.PNG" id="5_qdhuo"]
+[ext_resource type="Texture2D" uid="uid://du0dr7ink8m7a" path="res://assets/old assets/maze_sprites.PNG" id="5_qdhuo"]
 [ext_resource type="PackedScene" uid="uid://pqerpfydlepk" path="res://scenes/ai_bot.tscn" id="6_4r23q"]
 [ext_resource type="PackedScene" uid="uid://0t2ijiodrki1" path="res://scenes/player_3d.tscn" id="7_313jy"]
 [ext_resource type="PackedScene" uid="uid://0l3ugkwwib1m" path="res://scenes/win_panel.tscn" id="8_wkuka"]
