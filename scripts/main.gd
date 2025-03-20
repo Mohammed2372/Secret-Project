@@ -89,7 +89,7 @@ func _ready():
 	
 	print("Main script finished setup.")
 
-func _process(delta):
+func _process(_delta):
 	## handle if round ends
 	if round_end:
 		print("round end is true !")

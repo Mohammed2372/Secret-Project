@@ -56,7 +56,7 @@ func algo(maze, x, y):
 	var full_path = []
 	var n = maze.size()
 	var m = maze[0].size()
-
+	
 	while true:
 		# Reset visited and distance arrays
 		vis = []
@@ -70,34 +70,34 @@ func algo(maze, x, y):
 				vis[i].append(false)
 				par[i].append(Vector2(-1, -1))
 				dis[i].append(0)
-
+		
 		# Run BFS to find all reachable coins and their distances
 		var neww = bfs(maze, x, y)
-
+		
 		if neww.x == -1 and neww.y == -1:
 			break # If no 'C' is found, break the loop
-
+		
 		# Reconstruct path to the farthest coin
 		var path = reconstruct_path(neww.x, neww.y)
-
+		
 		# Add the path to the full path
 		for p in path:
 			full_path.append(p)
-
+		
 		# Update x and y to the position of the farthest 'C' found
 		x = neww.x
 		y = neww.y
-
+		
 		# Mark the current 'C' as visited or block it to avoid revisiting
 		maze[x][y] = '#'
-
+	
 	return full_path
 
 func path_to_directions(path):
 	var directions = []
 	for i in range(1, path.size()):
-		var dx = path[i].x - path[i - 1].x
-		var dy = path[i].y - path[i - 1].y
+		dx = path[i].x - path[i - 1].x
+		dy = path[i].y - path[i - 1].y
 
 		if dx == 1:
 			directions.append("Down")

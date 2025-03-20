@@ -4,6 +4,10 @@ extends Node
 var dirs = [Vector2(-1,0), Vector2(1,0), Vector2(0,-1), Vector2(0,1)]
 var dir_names = ["Up", "Down", "Left", "Right"]
 
+# Thread for AI pathfinding
+var ai_thread = Thread.new()
+var ai_result
+
 func find_coin_locations(maze: Array) -> Dictionary:
 	var coins = []
 	var start = null
@@ -146,19 +150,36 @@ func path_to_directions(path: Array) -> Array:
 				directions.append(dir_names[j])
 				break
 	return directions
-
-func get_ai_directions(maze: Array) -> Array:
+# Function to run in the thread
+func _ai_pathfinding(maze: Array):
 	var data = find_coin_locations(maze)
 	var start = data["start"]
 	var coins = data["coins"]
 	
 	if start == null or coins.size() == 0:
-		return []
+		ai_result = []
+		return
 	
 	var dist = build_distance_matrix(maze, coins, start)
 	var tsp_result = tsp_with_path(dist, coins.size() + 1)
 	var coin_order = tsp_result["path"]
 	var full_path = get_full_path(maze, coins, coin_order, start)
-	var directions = path_to_directions(full_path)
-	print("disatnce: ", dist)
-	return directions
+	ai_result = path_to_directions(full_path)
+
+# Start the AI pathfinding in a separate thread and wait for the result
+func get_ai_directions(maze: Array) -> Array:
+	if ai_thread.is_started():
+		ai_thread.wait_to_finish()  # Ensure the thread is not already running
+	
+	ai_result = null  # Reset the result
+	ai_thread.start(Callable(self, "_ai_pathfinding").bind(maze))
+	
+	# Wait for the thread to finish
+	ai_thread.wait_to_finish()
+	
+	return ai_result
+
+# Clean up the thread when done
+func _exit_tree():
+	if ai_thread.is_alive():
+		ai_thread.wait_to_finish()

@@ -16,7 +16,7 @@ var target_position = Vector2.ZERO
 var directions = []
 var current_direction_index = 0
 var score = 0
-var maze = []
+var current_maze = []
 
 func _ready():
 	print("AI script waiting for main script to finish...")
@@ -35,11 +35,11 @@ func _ready():
 		player.move_distance = move_distance
 		#print("Move Distance: ", move_distance)
 		
-		# Set the AI's position to the center of the first grid cell
-		var grid_center = Vector2(
-			move_distance / 2,  # Center of the first cell horizontally
-			move_distance / 2   # Center of the first cell vertically
-		)
+		## Set the AI's position to the center of the first grid cell
+		#var grid_center = Vector2(
+			#move_distance / 2,  # Center of the first cell horizontally
+			#move_distance / 2   # Center of the first cell vertically
+		#)
 		
 		# set ai and player position in the grids
 		#position = grid_center
@@ -54,14 +54,14 @@ func _ready():
 	print("current level: " ,Global.level)
 	# call the level function to call the global script
 	if Global.level == 1:
-		maze = Global.MAZE1.duplicate(true) # make copy of the maze to avoid modefying on the orignal
-		level_1(maze)
+		current_maze = Global.MAZE1.duplicate(true) # make copy of the maze to avoid modefying on the orignal
+		level_1(current_maze)
 	elif Global.level == 2:
-		maze = Global.MAZE2.duplicate(true)
-		level_2(maze)
+		current_maze = Global.MAZE2.duplicate(true)
+		level_2(current_maze)
 	elif Global.level == 3:
-		maze = Global.MAZE3.duplicate(true)
-		level_3(maze)
+		current_maze = Global.MAZE3.duplicate(true)
+		level_3(current_maze)
 	
 	## animation
 	#animation.play("Idle")
@@ -80,25 +80,28 @@ func level_1(maze):
 	var x = 0
 	var y = 0
 	var full_path = Level1Algo.algo(maze, x, y)
-
-	print("Full path: ", full_path)
 	
-	var directions = Level1Algo.path_to_directions(full_path)
-	print("Directions: ", directions, " length: ", len(directions))
+	#print("Full path: ", full_path)
+	
+	directions = Level1Algo.path_to_directions(full_path)
+	#print("Directions: ", directions)
+	print(" length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 	
 func level_2(maze):
 	directions = Level3Algo.get_ai_directions(maze)
-	print("directions: ", directions, " length: ", len(directions))
+	print("directions: ", directions)
+	print(" length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 
 func level_3(maze):
 	var start_x = 0
 	var start_y = 0
 	var full_path = Level2Algo.algo(maze, start_x, start_y)
-	print("Full path: ", full_path)
-	var directions = Level2Algo.path_to_directions(full_path)
-	print("Directions: ", directions, " length: ", len(directions))
+	#print("Full path: ", full_path)
+	directions = Level2Algo.path_to_directions(full_path)
+	#print("Directions: ", directions)
+	print(" length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 
 # Convert direction names to movement vectors
@@ -128,13 +131,13 @@ func attempt_move(direction):
 			rotate_toward_direction(direction)
 	
 # Move toward the target position
-func move_toward_target(delta):
+func move_toward_target(_delta):
 	var direction = (target_position - position).normalized()
 	velocity = direction * move_speed
-
+	
 	# Move the AI using move_and_slide
 	move_and_slide()
-
+	
 	# Check if the AI has reached the target position
 	if position.distance_to(target_position) < 5:  # Small threshold
 		position = target_position  # Snap to the target position
@@ -155,16 +158,16 @@ func rotate_toward_direction(direction: Vector2):
 		ai.rotation.y = deg_to_rad(90)  # Facing right
 
 # Check if a position is valid (e.g., not blocked by walls or obstacles)
-func is_position_valid(position):
+func is_position_valid(pos):
 	# Create a PhysicsRayQueryParameters2D object
 	var space_state = get_world_2d().direct_space_state
 	var ray_query = PhysicsRayQueryParameters2D.create(
 		self.position,  # Start position
-		position,  # End position
+		pos,  # End position
 		0b1,  # Collision mask (adjust as needed)
 		[self]  # Exclude the AI from collision detection
 	)
-
+	
 	# Perform the raycast
 	var result = space_state.intersect_ray(ray_query)
 	return result.is_empty()  # Return true if no collision
