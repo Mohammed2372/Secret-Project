@@ -181,5 +181,5 @@ func get_ai_directions(maze: Array) -> Array:
 
 # Clean up the thread when done
 func _exit_tree():
-	if ai_thread.is_alive():
+	if ai_thread.is_started():
 		ai_thread.wait_to_finish()

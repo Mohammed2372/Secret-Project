@@ -89,12 +89,12 @@ func move_toward_target(delta):
 			#animation.play("Idle")  # Play idle animation when movement stops
 
 # Check if a position is valid (e.g., not blocked by walls or obstacles)
-func is_position_valid(position):
+func is_position_valid(pos):
 	# Create a PhysicsRayQueryParameters2D object
 	var space_state = get_world_2d().direct_space_state
 	var ray_query = PhysicsRayQueryParameters2D.create(
 		self.position,  # Start position
-		position,  # End position
+		pos,  # End position
 		0b1,  # Collision mask (adjust as needed)
 		[self]  # Exclude the player from collision detection
 	)
@@ -107,11 +107,11 @@ func is_position_valid(position):
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("coin"):
 		score += 1
-		Global.player_score += 1
+		#Global.player_score += 1
 		print("player score: ", score)
 		area.queue_free()
 	if area.is_in_group("key"):
 		score += 10
-		Global.player_score += 10
+		#Global.player_score += 10
 		print("player score: ", score)
 		area.queue_free()

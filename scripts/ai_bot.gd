@@ -180,11 +180,11 @@ func set_directions(new_directions):
 func _on_area_2d_area_entered(body):
 	if body.is_in_group("coin"):
 		score += 1
-		Global.ai_score += 1
+		#Global.ai_score += 1
 		print("AI score: ", score)
 		body.queue_free()
 	if body.is_in_group("key"):
 		score += 10
-		Global.ai_score += 10
+		#Global.ai_score += 10
 		print("AI score: ", score)
 		body.queue_free()

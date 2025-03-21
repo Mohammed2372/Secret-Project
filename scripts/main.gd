@@ -102,6 +102,10 @@ func _process(_delta):
 		else:
 			print("Draw")  # this one will never happen
 		
+		## handle scores
+		Global.player_score += player.score
+		Global.ai_score += ai.score
+		
 		## show win scene
 		show_win_scene()
 		

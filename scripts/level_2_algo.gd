@@ -40,7 +40,7 @@ func bfs(maze, xx, yy):
 				par[nx][ny] = Vector2(x, y) # Set parent of (nx, ny) to (x, y)
 				q.append(Vector2(nx, ny))
 				
-				if maze[nx][ny] == 'C' or maze[nx][ny] == 'B':
+				if maze[nx][ny] == 'B' or maze[nx][ny] == 'C':
 					return reconstruct_path(nx, ny) # Reconstruct path from (nx, ny) to start
 	
 	return [] # Return empty path if no 'C' or 'B' is found

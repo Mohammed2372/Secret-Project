@@ -53,6 +53,11 @@ func restart_pressed():
 ## levels menu
 func levels_menu_presses():
 	print("levels menu button pressed")
+	## handle global score to be 0
+	Global.player_score = 0
+	Global.ai_score = 0
+	
+	## change scene
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/menu_levels.tscn")
 

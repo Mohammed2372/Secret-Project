@@ -63,7 +63,6 @@ collision_mask = 63
 main_script = NodePath("..")
 tilemap = NodePath("../TileMapLayer")
 player = NodePath("../Player3d")
-move_speed = 150
 
 [node name="Player3d" parent="." node_paths=PackedStringArray("main") instance=ExtResource("6_bd8t5")]
 position = Vector2(-11, -31)
