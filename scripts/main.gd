@@ -14,8 +14,8 @@ extends Node2D
 @export var ai_viewport_margin := Vector2(10, 10)  # Margin from screen edges
 
 # Tile maps
-@onready var tile_map = $TileMapLayer
-@onready var ai_tile_map = $TileMapLayer2
+@onready var tile_map = $"player tilemap"
+@onready var ai_tile_map = $"ai tilemap"
 
 # references to cameras
 @onready var player_camera = $PlayerCamera
