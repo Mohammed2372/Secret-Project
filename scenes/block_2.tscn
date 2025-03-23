@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://crf3aj5oua1g0"]
+
+[ext_resource type="Texture2D" uid="uid://cusyaq62devxv" path="res://assets/RF_Catacombs_v1.0/decorative2.png" id="2_06unf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyxkj"]
+size = Vector2(16, 16)
+
+[node name="block2" type="Node2D"]
+scale = Vector2(8, 8)
+
+[node name="Decorative2" type="Sprite2D" parent="."]
+position = Vector2(-8.5, -8)
+scale = Vector2(0.944444, 0.782609)
+texture = ExtResource("2_06unf")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-8, -8)
+shape = SubResource("RectangleShape2D_oyxkj")

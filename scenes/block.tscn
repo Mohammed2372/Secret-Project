@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://jrbe88mma876"]
+[gd_scene load_steps=4 format=3 uid="uid://jrbe88mma876"]
 
 [ext_resource type="Texture2D" uid="uid://rxk1a5jn7rb8" path="res://assets/old assets/block.png" id="1_ro42p"]
+[ext_resource type="Texture2D" uid="uid://d0rideixy3tvn" path="res://assets/RF_Catacombs_v1.0/decorative1.png" id="2_cgrg5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pxitv"]
 size = Vector2(16, 16)
@@ -8,7 +9,13 @@ size = Vector2(16, 16)
 [node name="block" type="Node2D"]
 scale = Vector2(8, 8)
 
+[node name="Decorative1" type="Sprite2D" parent="."]
+position = Vector2(-8.125, -8.375)
+scale = Vector2(1, 0.833333)
+texture = ExtResource("2_cgrg5")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(-8, -8)
 texture = ExtResource("1_ro42p")
 

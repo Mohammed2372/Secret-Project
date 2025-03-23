@@ -5,7 +5,7 @@ extends Node2D
 @export var ai: CharacterBody2D
 
 @export_category("wall & coins & traps")
-@export var wall_scene: PackedScene
+@export var wall_scenes: Array[PackedScene]
 @export var coin_scene: PackedScene
 @export var special_coin_scene: PackedScene
 
@@ -45,6 +45,9 @@ func _ready():
 	Global.level = $".".name.to_int()
 	print("current level is: ", Global.level)
 	
+	## draw maze based on current level
+	get_current_level_and_draw()
+	
 	## set up player camera
 	player_camera.make_current()  # Make it the main camera
 	player_camera.position = player.position  # Initially center on player
@@ -55,28 +58,6 @@ func _ready():
 	ai_viewport.msaa_2d = Viewport.MSAA_DISABLED  # Disable anti-aliasing for pixel art
 	ai_viewport_container.custom_minimum_size = ai_viewport_size
 	
-	## current level
-	if Global.level == 1:
-		Global.max_score = Global.MAZE1_MAX_SCORE
-		maze_width = Global.MAZE1[0].size()  # Get width for offset
-		maze_height = Global.MAZE1.size()
-		draw_maze(Global.MAZE1, tile_map, false, Vector2.ZERO)  # Draw player maze with no offset
-		draw_maze(Global.MAZE1, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))  # Draw AI maze with offset
-	elif Global.level == 2:
-		Global.max_score = Global.MAZE2_MAX_SCORE
-		maze_width = Global.MAZE2[0].size()
-		maze_height = Global.MAZE2.size()
-		draw_maze(Global.MAZE2, tile_map, false, Vector2.ZERO)
-		draw_maze(Global.MAZE2, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
-	elif Global.level == 3:
-		Global.max_score = Global.MAZE3_MAX_SCORE
-		maze_width = Global.MAZE3[0].size()
-		maze_height = Global.MAZE3.size()
-		draw_maze(Global.MAZE3, tile_map, false, Vector2.ZERO)
-		draw_maze(Global.MAZE3, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
-	elif Global.level == 4:
-		print("origin shift level")
-		
 	## set ai camera
 	setup_static_ai_camera()
 	
@@ -119,8 +100,32 @@ func _process(_delta):
 	#if ai_camera and ai:
 		#ai_camera.global_position = ai.global_position
 
+## get current level and draw
+func get_current_level_and_draw() -> void:
+	## current level
+	if Global.level == 1:
+		Global.max_score = Global.MAZE1_MAX_SCORE
+		maze_width = Global.MAZE1[0].size()  # Get width for offset
+		maze_height = Global.MAZE1.size()
+		draw_maze(Global.MAZE1, tile_map, false, Vector2.ZERO)  # Draw player maze with no offset
+		draw_maze(Global.MAZE1, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))  # Draw AI maze with offset
+	elif Global.level == 2:
+		Global.max_score = Global.MAZE2_MAX_SCORE
+		maze_width = Global.MAZE2[0].size()
+		maze_height = Global.MAZE2.size()
+		draw_maze(Global.MAZE2, tile_map, false, Vector2.ZERO)
+		draw_maze(Global.MAZE2, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
+	elif Global.level == 3:
+		Global.max_score = Global.MAZE3_MAX_SCORE
+		maze_width = Global.MAZE3[0].size()
+		maze_height = Global.MAZE3.size()
+		draw_maze(Global.MAZE3, tile_map, false, Vector2.ZERO)
+		draw_maze(Global.MAZE3, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
+	elif Global.level == 4:
+		print("origin shift level")
+
 ## draw maze
-func draw_maze(maze, target_tilemap, is_ai_maze, offset):
+func draw_maze(maze, target_tilemap, is_ai_maze, offset) -> void:
 	var tile_size = Vector2(target_tilemap.tile_set.tile_size) * target_tilemap.scale
 	
 	for y in range(maze.size()):
@@ -137,7 +142,7 @@ func draw_maze(maze, target_tilemap, is_ai_maze, offset):
 			elif char == "B":
 				instance = special_coin_scene.instantiate()
 			elif char == "#":
-				instance = wall_scene.instantiate()
+				instance = randomize_wall_scenes().instantiate()
 			elif char == "S" and not is_ai_maze:
 				# Only place player in player maze
 				player.global_position = world_pos
@@ -156,8 +161,16 @@ func draw_maze(maze, target_tilemap, is_ai_maze, offset):
 				instance.position = world_pos
 				add_child(instance)
 
+## random wall scene to use
+func randomize_wall_scenes() -> PackedScene:
+	if wall_scenes.size() > 0:
+		var rand_index = randi() % wall_scenes.size()  # Generate a random index
+		var rand_scene = wall_scenes[rand_index]  # Get the random scene
+		return rand_scene
+	return null
+
 ## setup mini camera
-func setup_static_ai_camera():
+func setup_static_ai_camera() -> void:
 	# Calculate the AI maze offset
 	var maze_offset = Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0)
 	
@@ -186,16 +199,16 @@ func setup_static_ai_camera():
 	ai_camera.zoom = Vector2(zoom_factor, zoom_factor)
 
 ## win scene
-func show_win_scene():
+func show_win_scene() -> void:
 	get_tree().paused = true
 	win_scene.show_win_screen(Global.player_score, Global.ai_score)
 
-func _on_next_level():
+func _on_next_level() -> void:
 	print("next level button pressed")
 	get_tree().paused = false
 	load_next_level()
 
-func load_next_level():
+func load_next_level() -> void:
 	# Logic to determine and load the next level
 	var current_scene = get_tree().current_scene.scene_file_path
 	var next_scene = get_next_level_path(current_scene)
