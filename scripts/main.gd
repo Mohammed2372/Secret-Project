@@ -26,6 +26,7 @@ extends Node2D
 # references to ui scenes
 @onready var pause_menu: Control = $"CanvasLayer/pause menu"
 @onready var win_scene: Control = $"CanvasLayer/win panel"
+@onready var coin_progress_bar: TextureProgressBar = $"CanvasLayer/coin progress bar"
 
 # variables
 var is_ready = false
@@ -44,6 +45,10 @@ func _ready():
 	## set current level
 	Global.level = $".".name.to_int()
 	print("current level is: ", Global.level)
+	
+	## set value of progress bar 
+	coin_progress_bar.value = 0
+	update_coin_display()
 	
 	## draw maze based on current level
 	get_current_level_and_draw()
@@ -105,20 +110,29 @@ func get_current_level_and_draw() -> void:
 	## current level
 	if Global.level == 1:
 		Global.max_score = Global.MAZE1_MAX_SCORE
-		maze_width = Global.MAZE1[0].size()  # Get width for offset
+		coin_progress_bar.max_value = Global.max_score
+		## height and width
+		maze_width = Global.MAZE1[0].size()
 		maze_height = Global.MAZE1.size()
+		## draw
 		draw_maze(Global.MAZE1, tile_map, false, Vector2.ZERO)  # Draw player maze with no offset
 		draw_maze(Global.MAZE1, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))  # Draw AI maze with offset
 	elif Global.level == 2:
 		Global.max_score = Global.MAZE2_MAX_SCORE
+		coin_progress_bar.max_value = Global.max_score
+		## height and width
 		maze_width = Global.MAZE2[0].size()
 		maze_height = Global.MAZE2.size()
+		## draw
 		draw_maze(Global.MAZE2, tile_map, false, Vector2.ZERO)
 		draw_maze(Global.MAZE2, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
 	elif Global.level == 3:
 		Global.max_score = Global.MAZE3_MAX_SCORE
+		coin_progress_bar.max_value = Global.max_score
+		## height and width
 		maze_width = Global.MAZE3[0].size()
 		maze_height = Global.MAZE3.size()
+		## draw
 		draw_maze(Global.MAZE3, tile_map, false, Vector2.ZERO)
 		draw_maze(Global.MAZE3, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
 	elif Global.level == 4:
@@ -168,6 +182,10 @@ func randomize_wall_scenes() -> PackedScene:
 		var rand_scene = wall_scenes[rand_index]  # Get the random scene
 		return rand_scene
 	return null
+
+## coins progress bar
+func update_coin_display() -> void:
+	coin_progress_bar.value = player.score
 
 ## setup mini camera
 func setup_static_ai_camera() -> void:

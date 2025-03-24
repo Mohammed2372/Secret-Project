@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://xwc8xe336bky"]
+[gd_scene load_steps=14 format=4 uid="uid://xwc8xe336bky"]
 
 [ext_resource type="Script" uid="uid://btyvgfvvssw45" path="res://scripts/main.gd" id="1_xq6b3"]
 [ext_resource type="PackedScene" uid="uid://jrbe88mma876" path="res://scenes/block.tscn" id="2_f100q"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://0t2ijiodrki1" path="res://scenes/player_3d.tscn" id="7_313jy"]
 [ext_resource type="PackedScene" uid="uid://0l3ugkwwib1m" path="res://scenes/win_panel.tscn" id="8_wkuka"]
 [ext_resource type="PackedScene" uid="uid://tn4krxcif16" path="res://scenes/pause_menu.tscn" id="9_x5s6u"]
+[ext_resource type="PackedScene" uid="uid://dxxrcguodxc3n" path="res://scenes/coin_progress_bar.tscn" id="11_wasir"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_arbk7"]
 texture = ExtResource("5_qdhuo")
@@ -108,3 +109,5 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+
+[node name="coin progress bar" parent="CanvasLayer" instance=ExtResource("11_wasir")]

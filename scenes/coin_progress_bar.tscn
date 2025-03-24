@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxxrcguodxc3n"]
+
+[ext_resource type="Texture2D" uid="uid://bx3u7bhe6dvjk" path="res://assets/ui_red_progress_bar.png" id="1_cq55y"]
+
+[node name="coin progress bar" type="TextureProgressBar"]
+z_index = 10
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -224.0
+offset_right = 224.0
+offset_bottom = 52.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+nine_patch_stretch = true
+texture_progress = ExtResource("1_cq55y")
+tint_under = Color(0.374139, 0.374139, 0.374139, 1)
+tint_over = Color(0.129558, 0.129558, 0.129558, 1)
+tint_progress = Color(0.482353, 0, 0, 1)

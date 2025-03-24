@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://crxekajrsafq3"]
+[gd_scene load_steps=22 format=4 uid="uid://crxekajrsafq3"]
 
 [ext_resource type="Script" uid="uid://btyvgfvvssw45" path="res://scripts/main.gd" id="1_sqrxn"]
 [ext_resource type="PackedScene" uid="uid://jrbe88mma876" path="res://scenes/block.tscn" id="2_28jt5"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://0l3ugkwwib1m" path="res://scenes/win_panel.tscn" id="8_wfl0k"]
 [ext_resource type="Texture2D" uid="uid://bjd75etgxmqw0" path="res://assets/RF_Catacombs_v1.0/decorative.png" id="8_xmjrc"]
 [ext_resource type="PackedScene" uid="uid://tn4krxcif16" path="res://scenes/pause_menu.tscn" id="9_wfl0k"]
+[ext_resource type="PackedScene" uid="uid://dxxrcguodxc3n" path="res://scenes/coin_progress_bar.tscn" id="13_3qrju"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4ae40"]
 texture = ExtResource("2_huc34")
@@ -3651,3 +3652,8 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+
+[node name="coin progress bar" parent="CanvasLayer" instance=ExtResource("13_3qrju")]
+tint_under = Color(0.374139, 0.374139, 0.374139, 1)
+tint_over = Color(0.129558, 0.129558, 0.129558, 1)
+tint_progress = Color(0.482353, 0, 0, 1)
