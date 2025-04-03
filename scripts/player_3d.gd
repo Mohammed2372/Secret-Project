@@ -6,6 +6,10 @@ extends Node2D  # Use Node2D as the base since we're working in 2D space
 @onready var animation: AnimationPlayer = $SubViewportContainer/SubViewport/Skeleton_Warrior/AnimationPlayer
 @onready var player: Node3D = $SubViewportContainer/SubViewport/Skeleton_Warrior
 
+## sounds
+@onready var coin_streamer: AudioStreamPlayer2D = $"coin sound"
+@onready var coin_sound = preload("res://assets/sounds/coin.wav")
+
 var move_distance: float = 128  # Distance to move in one step (should match grid size)
 var is_moving = false  # Whether the player is currently moving
 var target_position = Vector2.ZERO  # Target position for movement (2D)
@@ -106,14 +110,24 @@ func is_position_valid(pos):
 # Collision handling with coins and keys
 func _on_area_2d_area_entered(area):
 	if area.is_in_group("coin"):
-		score += 1
+		score += Global.COIN_VALUE
 		#Global.player_score += 1
+		## sounds
+		coin_streamer.pitch_scale = randf_range(0.9, 1.1)
+		coin_streamer.play()
+		## update score
 		main.update_coin_display()
 		#print("player score: ", score)
+		## remove coin
 		area.queue_free()
 	if area.is_in_group("key"):
-		score += 10
+		score += Global.KEY_VALUE
 		#Global.player_score += 10
+		## sounds
+		coin_streamer.pitch_scale = randf_range(0.9, 1.1)
+		coin_streamer.play()
+		## update score
 		main.update_coin_display()
 		#print("player score: ", score)
+		## remove key
 		area.queue_free()

@@ -1,5 +1,8 @@
 extends Node2D
 
+const COIN_VALUE = 1
+const KEY_VALUE = 5
+
 # Maze matrix ("." = free, "#" = block, "C" = coin, "S" = AI start)
 const MAZE1 = [
 	["S", ".", ".", ".", "#", ".", "C", ".", ".", "C"],
@@ -17,7 +20,7 @@ const MAZE1 = [
 ## maze 1 variables
 var maze1_coins_num = 10
 var maze1_big_coins_num = 2
-var MAZE1_MAX_SCORE = maze1_coins_num + (10 * maze1_big_coins_num)
+var MAZE1_MAX_SCORE = (COIN_VALUE * maze1_coins_num) + (KEY_VALUE * maze1_big_coins_num)
 
 const MAZE2 = [
 	[".", "#", ".", ".", "C", ".", "#", ".", ".", ".", ".", "#", ".", ".", "."],
@@ -40,7 +43,7 @@ const MAZE2 = [
 ## maze 2 variables
 var maze2_coins_num = 11
 var maze2_big_coins_num = 4
-var MAZE2_MAX_SCORE = maze2_coins_num + (10 * maze2_big_coins_num)
+var MAZE2_MAX_SCORE = (COIN_VALUE * maze2_coins_num) + (KEY_VALUE * maze2_big_coins_num)
 
 const MAZE3 = [
 	["S", ".", "#", ".", ".", ".", "#", ".", ".", ".", "#", ".", "C", ".", ".", ".", ".", ".", ".", "C"],
@@ -68,7 +71,7 @@ const MAZE3 = [
 ## maze 3 variables
 var maze3_coins_num = 20
 var maze3_big_coins_num = 6
-var MAZE3_MAX_SCORE = maze3_coins_num + (10 * maze3_big_coins_num)
+var MAZE3_MAX_SCORE = (COIN_VALUE * maze3_coins_num) + (KEY_VALUE * maze3_big_coins_num)
 
 ## 
 var level: int = 1

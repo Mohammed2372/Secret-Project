@@ -19,12 +19,12 @@ var score = 0
 var current_maze = []
 
 func _ready():
-	print("AI script waiting for main script to finish...")
+	#print("AI script waiting for main script to finish...")
 	# Wait until main script is ready
 	while not main_script.is_ready:
 		await get_tree().process_frame  # Wait for the next frame
 	
-	print("AI script running after main script.")
+	#print("AI script running after main script.")
 	if tilemap:
 		# Get tile size from the TileMap
 		var tile_size = tilemap.tile_set.tile_size
@@ -51,7 +51,7 @@ func _ready():
 	
 	target_position = position
 	
-	print("current level: " ,Global.level)
+	#print("current level: " ,Global.level)
 	# call the level function to call the global script
 	if Global.level == 1:
 		current_maze = Global.MAZE1.duplicate(true) # make copy of the maze to avoid modefying on the orignal
@@ -179,12 +179,12 @@ func set_directions(new_directions):
 
 func _on_area_2d_area_entered(body):
 	if body.is_in_group("coin"):
-		score += 1
+		score += Global.COIN_VALUE
 		#Global.ai_score += 1
 		#print("AI score: ", score)
 		body.queue_free()
 	if body.is_in_group("key"):
-		score += 10
+		score += Global.KEY_VALUE
 		#Global.ai_score += 10
 		#print("AI score: ", score)
 		body.queue_free()

@@ -36,7 +36,7 @@ var maze_height = 0
 var is_paused = false
 
 func _ready():
-	print("Main script running...")
+	#print("Main script running...")
 	
 	## make a timer for whole tree to make main script run first
 	await get_tree().create_timer(0.2).timeout  # Simulate some setup work
@@ -73,20 +73,20 @@ func _ready():
 	pause_menu.connect("go_to_main_menu", Callable(self, "_on_go_to_main_menu"))
 	win_scene.connect("next_level", Callable(self, "_on_next_level"))
 	
-	print("Main script finished setup.")
+	#print("Main script finished setup.")
 
 func _process(_delta):
 	## handle if round ends
 	if round_end:
-		print("round end is true !")
+		#print("round end is true !")
 		if player.score > ai.score:
+			#print("Player wins")
 			$"CanvasLayer/win panel/VBoxContainer/congrats".text = "Player won this level"
-			print("Player wins")
 		elif ai.score > player.score:
+			#print("Ai wins")
 			$"CanvasLayer/win panel/VBoxContainer/congrats".text = "AI won this level"
-			print("Ai wins")
 		else:
-			print("Draw")  # this one will never happen
+			print("Draw, that will never happen in this game, it is happening now lol")
 		
 		## handle scores
 		Global.player_score += player.score
