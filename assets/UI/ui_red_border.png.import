@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfm87w6j78ueb"
-path="res://.godot/imported/mainlevbuild.png-14a49fcc7cce38f6bfc02400323d13ec.ctex"
+uid="uid://bcxt4jp85jabk"
+path="res://.godot/imported/ui_red_border.png-bd7f0b2ed8905ae706c9141515d74e0a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tile map/mainlevbuild.png"
-dest_files=["res://.godot/imported/mainlevbuild.png-14a49fcc7cce38f6bfc02400323d13ec.ctex"]
+source_file="res://assets/UI/ui_red_border.png"
+dest_files=["res://.godot/imported/ui_red_border.png-bd7f0b2ed8905ae706c9141515d74e0a.ctex"]
 
 [params]
 

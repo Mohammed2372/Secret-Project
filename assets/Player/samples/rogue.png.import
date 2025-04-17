@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://boghls0dkb665"
-path="res://.godot/imported/rogue.png-17d95fcc60333f532a7a4a54c1385d9f.ctex"
+path="res://.godot/imported/rogue.png-306bb1437a42edff6459b488d450d72e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/KayKit_Skeletons_1.0_FREE/samples/rogue.png"
-dest_files=["res://.godot/imported/rogue.png-17d95fcc60333f532a7a4a54c1385d9f.ctex"]
+source_file="res://assets/Player/samples/rogue.png"
+dest_files=["res://.godot/imported/rogue.png-306bb1437a42edff6459b488d450d72e.ctex"]
 
 [params]
 

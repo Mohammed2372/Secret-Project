@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmkwu3txwa4p7"
-path.s3tc="res://.godot/imported/skeleton_texture.png-7cf01ecf833e6ecdf218838be64077bb.s3tc.ctex"
+path.s3tc="res://.godot/imported/skeleton_texture.png-eeb1aa5044119840222efed6739befe4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/KayKit_Skeletons_1.0_FREE/characters/fbx/skeleton_texture.png"
-dest_files=["res://.godot/imported/skeleton_texture.png-7cf01ecf833e6ecdf218838be64077bb.s3tc.ctex"]
+source_file="res://assets/Player/characters/fbx/skeleton_texture.png"
+dest_files=["res://.godot/imported/skeleton_texture.png-eeb1aa5044119840222efed6739befe4.s3tc.ctex"]
 
 [params]
 

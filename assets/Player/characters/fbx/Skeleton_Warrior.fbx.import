@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b1ipt2xuui2nn"
-path="res://.godot/imported/Skeleton_Warrior.fbx-2ac2b4fb997bc6f5605f8be67bc99de2.scn"
+path="res://.godot/imported/Skeleton_Warrior.fbx-da18805156f81bbfba4a807f281bbf7e.scn"
 
 [deps]
 
-source_file="res://assets/KayKit_Skeletons_1.0_FREE/characters/fbx/Skeleton_Warrior.fbx"
-dest_files=["res://.godot/imported/Skeleton_Warrior.fbx-2ac2b4fb997bc6f5605f8be67bc99de2.scn"]
+source_file="res://assets/Player/characters/fbx/Skeleton_Warrior.fbx"
+dest_files=["res://.godot/imported/Skeleton_Warrior.fbx-da18805156f81bbfba4a807f281bbf7e.scn"]
 
 [params]
 

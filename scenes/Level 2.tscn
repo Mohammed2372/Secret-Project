@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://brgttitstv6wm" path="res://scenes/coin.tscn" id="3_lr6kn"]
 [ext_resource type="PackedScene" uid="uid://cbwgf6puy0me0" path="res://scenes/key.tscn" id="4_acanq"]
 [ext_resource type="PackedScene" uid="uid://pqerpfydlepk" path="res://scenes/ai_bot.tscn" id="4_jcrop"]
-[ext_resource type="Texture2D" uid="uid://bfm87w6j78ueb" path="res://assets/RF_Catacombs_v1.0/mainlevbuild.png" id="6_j8fpy"]
+[ext_resource type="Texture2D" uid="uid://bfm87w6j78ueb" path="res://assets/Tile map/mainlevbuild.png" id="6_j8fpy"]
 [ext_resource type="PackedScene" uid="uid://0t2ijiodrki1" path="res://scenes/player_3d.tscn" id="7_b2xu7"]
 [ext_resource type="PackedScene" uid="uid://0l3ugkwwib1m" path="res://scenes/win_panel.tscn" id="8_t3p7j"]
-[ext_resource type="Texture2D" uid="uid://bjd75etgxmqw0" path="res://assets/RF_Catacombs_v1.0/decorative.png" id="8_tu1ll"]
+[ext_resource type="Texture2D" uid="uid://bjd75etgxmqw0" path="res://assets/Tile map/decorations/decorative.png" id="8_tu1ll"]
 [ext_resource type="PackedScene" uid="uid://tn4krxcif16" path="res://scenes/pause_menu.tscn" id="9_7mr7b"]
 [ext_resource type="PackedScene" uid="uid://dxxrcguodxc3n" path="res://scenes/coin_progress_bar.tscn" id="13_u67oi"]
 

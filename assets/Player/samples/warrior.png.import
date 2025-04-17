@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ba4qgxue71qbs"
-path="res://.godot/imported/warrior.png-f1b670bee3d7a747cb9b1b478e0c8e82.ctex"
+path="res://.godot/imported/warrior.png-57a4a5d5d293a04003966f85b750d7d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/KayKit_Skeletons_1.0_FREE/samples/warrior.png"
-dest_files=["res://.godot/imported/warrior.png-f1b670bee3d7a747cb9b1b478e0c8e82.ctex"]
+source_file="res://assets/Player/samples/warrior.png"
+dest_files=["res://.godot/imported/warrior.png-57a4a5d5d293a04003966f85b750d7d3.ctex"]
 
 [params]
 

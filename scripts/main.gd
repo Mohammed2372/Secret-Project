@@ -81,12 +81,12 @@ func _process(_delta):
 		#print("round end is true !")
 		if player.score > ai.score:
 			#print("Player wins")
-			$"CanvasLayer/win panel/VBoxContainer/congrats".text = "Player won this level"
+			$"CanvasLayer/win panel/VBoxContainer/congrats".text = "You won this level"
 		elif ai.score > player.score:
 			#print("Ai wins")
 			$"CanvasLayer/win panel/VBoxContainer/congrats".text = "AI won this level"
 		else:
-			print("Draw, that will never happen in this game, it is happening now lol")
+			print("Draw, that will never happen in this game, wait how is it happening now lol")
 		
 		## handle scores
 		Global.player_score += player.score
