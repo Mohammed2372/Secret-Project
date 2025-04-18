@@ -88,13 +88,13 @@ func level_1(maze):
 	
 	directions = Level1Algo.path_to_directions(full_path)
 	#print("Directions: ", directions)
-	print(" length: ", len(directions))
+	#print(" length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 	
 func level_2(maze):
 	directions = Level3Algo.get_ai_directions(maze)
-	print("directions: ", directions)
-	print(" length: ", len(directions))
+	#print("directions: ", directions)
+	#print(" length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 
 func level_3(maze):
@@ -104,7 +104,7 @@ func level_3(maze):
 	#print("Full path: ", full_path)
 	directions = Level2Algo.path_to_directions(full_path)
 	#print("Directions: ", directions)
-	print(" length: ", len(directions))
+	#print(" length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
 
 func level_4(maze):

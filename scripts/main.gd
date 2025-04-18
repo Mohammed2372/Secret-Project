@@ -294,9 +294,9 @@ func load_next_level() -> void:
 func get_next_level_path(current_scene: String) -> String:
 	var levels = [
 		"res://scenes/Level 1.tscn",
-		"res://scenes/Level 2.tscn",
 		"res://scenes/Level 3.tscn",
-		"res://scenes/Level 4.tscn",
+		"res://scenes/Level 2.tscn",
+		#"res://scenes/Level 4.tscn",
 		"res://scenes/menu_levels.tscn",
 	]
 	

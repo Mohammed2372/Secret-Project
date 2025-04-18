@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://0l3ugkwwib1m"]
+[gd_scene load_steps=4 format=3 uid="uid://0l3ugkwwib1m"]
 
 [ext_resource type="Script" uid="uid://jdcp2ul56g8o" path="res://scripts/win_panel.gd" id="1_13l7w"]
+[ext_resource type="Shader" uid="uid://clliixktor4k6" path="res://assets/shaders/pause menu.gdshader" id="2_md1vi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dmrma"]
+shader = ExtResource("2_md1vi")
+shader_parameter/amount = 0.0
 
 [node name="win panel" type="Control"]
 process_mode = 3
@@ -11,6 +16,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_13l7w")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_dmrma")
+offset_left = -25.0
+offset_top = -23.0
+offset_right = 1174.0
+offset_bottom = 674.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

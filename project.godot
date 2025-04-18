@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Secret Project"
-run/main_scene="res://scenes/Level 1.tscn"
+run/main_scene="uid://bgra3t2o85ipu"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 

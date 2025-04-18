@@ -6,12 +6,6 @@ extends Control
 @onready var level_menus_button = $"VBoxContainer/Level menu button"
 @onready var main_menu_button = $"VBoxContainer/Main menu button"
 
-## signals to communicate with the main game scene
-signal resume_game
-signal restart_game
-signal go_to_levels_menu
-signal go_to_main_menu
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -21,15 +21,18 @@ var is_input_pressed = false  # Track if a movement key is currently pressed
 func _ready():
 	target_position = position  # Initialize target position to current position
 	# Wait for main to be ready
-	while not main.is_ready:
-		await get_tree().process_frame  # Wait for the next frame
+	if main:
+		while not main.is_ready:
+			await get_tree().process_frame  # Wait for the next frame
 
 # Called every frame
 func _process(delta):
 	if is_moving:
 		move_toward_target(delta)
 	else:
-		handle_input()
+		if main:
+			handle_input()
+		else: animation.play("Idle")
 
 	# Handle score
 	if score >= Global.max_score:
