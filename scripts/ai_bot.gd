@@ -62,6 +62,9 @@ func _ready():
 	elif Global.level == 3:
 		current_maze = Global.MAZE3.duplicate(true)
 		level_3(current_maze)
+	elif Global.level == 4:
+		current_maze = Global.Maze4.duplicate(true)
+		level_4(current_maze)
 	
 	## animation
 	#animation.play("Idle")
@@ -103,6 +106,9 @@ func level_3(maze):
 	#print("Directions: ", directions)
 	print(" length: ", len(directions))
 	set_directions(convert_directions_to_vectors(directions))
+
+func level_4(maze):
+	pass
 
 # Convert direction names to movement vectors
 func convert_directions_to_vectors(direction_names):

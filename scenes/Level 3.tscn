@@ -1069,7 +1069,7 @@ physics_layer_5/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_arbk7")
 sources/1 = SubResource("TileSetAtlasSource_3rqio")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0w750"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eaj7v"]
 texture = ExtResource("5_3rqio")
 40:0/0 = 0
 41:0/0 = 0
@@ -2465,9 +2465,9 @@ texture = ExtResource("5_3rqio")
 [sub_resource type="TileSet" id="TileSet_4aoa8"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 128
-sources/0 = SubResource("TileSetAtlasSource_0w750")
+sources/0 = SubResource("TileSetAtlasSource_eaj7v")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eaj7v"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5dip2"]
 texture = ExtResource("8_4aoa8")
 0:1/0 = 0
 1:1/0 = 0
@@ -2612,7 +2612,7 @@ texture = ExtResource("8_4aoa8")
 14:0/0 = 0
 15:0/0 = 0
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4aoa8"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2gjnp"]
 texture = ExtResource("5_3rqio")
 40:0/0 = 0
 41:0/0 = 0
@@ -3642,8 +3642,8 @@ texture = ExtResource("5_3rqio")
 [sub_resource type="TileSet" id="TileSet_5dip2"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 128
-sources/0 = SubResource("TileSetAtlasSource_eaj7v")
-sources/1 = SubResource("TileSetAtlasSource_4aoa8")
+sources/0 = SubResource("TileSetAtlasSource_5dip2")
+sources/1 = SubResource("TileSetAtlasSource_2gjnp")
 
 [node name="3" type="Node2D" node_paths=PackedStringArray("player", "ai")]
 script = ExtResource("1_qm0ss")

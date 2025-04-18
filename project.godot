@@ -21,6 +21,7 @@ Global="*res://scripts/global.gd"
 Level1Algo="*res://scripts/level_1_algo.gd"
 Level2Algo="*res://scripts/level_2_algo.gd"
 Level3Algo="*res://scripts/level_3_algo.gd"
+Level4Algo="*res://scripts/level_4_algo.gd"
 
 [display]
 

@@ -73,6 +73,9 @@ var maze3_coins_num = 20
 var maze3_big_coins_num = 6
 var MAZE3_MAX_SCORE = (COIN_VALUE * maze3_coins_num) + (KEY_VALUE * maze3_big_coins_num)
 
+## maze 4
+var Maze4 = [[]]
+
 ## 
 var level: int = 1
 var max_score = 100

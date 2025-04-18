@@ -89,7 +89,7 @@ func algo(maze, x, y):
 		y = neww.y
 		
 		# Mark the current 'C' as visited or block it to avoid revisiting
-		maze[x][y] = '#'
+		maze[x][y] = '.'
 	
 	return full_path
 

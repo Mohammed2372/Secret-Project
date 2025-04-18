@@ -81,7 +81,7 @@ func tsp_with_path(dist: Array, n: int) -> Dictionary:
 		dp.append([])
 		parent.append([])
 		for j in range(n):
-			dp[i].append(100000)
+			dp[i].append(100)
 			parent[i].append(-1)
 	
 	dp[1][0] = 0

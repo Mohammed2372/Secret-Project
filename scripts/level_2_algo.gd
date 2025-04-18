@@ -74,7 +74,7 @@ func algo(maze, x, y):
 		y = path[-1].y
 		
 		# Mark the current 'C' or 'B' as visited or block it to avoid revisiting
-		maze[x][y] = '#'
+		maze[x][y] = '.'
 	
 	return full_path
 

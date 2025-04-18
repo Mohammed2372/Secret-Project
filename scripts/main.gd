@@ -34,6 +34,7 @@ var round_end = false
 var maze_width = 0  # To store the width of the maze for offset calculation
 var maze_height = 0
 var is_paused = false
+var maze_shift_timer: Timer
 
 func _ready():
 	#print("Main script running...")
@@ -73,8 +74,16 @@ func _ready():
 	pause_menu.connect("go_to_main_menu", Callable(self, "_on_go_to_main_menu"))
 	win_scene.connect("next_level", Callable(self, "_on_next_level"))
 	
+	## Initialize timer for origin shift
+	if Global.level == 4:
+		maze_shift_timer = Timer.new()
+		add_child(maze_shift_timer)
+		maze_shift_timer.timeout.connect(_on_maze_shift_timeout)
+		maze_shift_timer.one_shot = false
+		maze_shift_timer.start(10)  # Start immediately with 10 second interval
+	
 	#print("Main script finished setup.")
-
+	
 func _process(_delta):
 	## handle if round ends
 	if round_end:
@@ -104,11 +113,17 @@ func _process(_delta):
 	
 	#if ai_camera and ai:
 		#ai_camera.global_position = ai.global_position
+		
+	### level 4 (origin shift) call draw maze to redraw new maze
+	#if Global.level == 4:
+		### timer to call it every 10 seconds
+		#get_current_level_and_draw()
 
 ## get current level and draw
 func get_current_level_and_draw() -> void:
 	## current level
 	if Global.level == 1:
+		## score
 		Global.max_score = Global.MAZE1_MAX_SCORE
 		coin_progress_bar.max_value = Global.max_score
 		## height and width
@@ -118,6 +133,7 @@ func get_current_level_and_draw() -> void:
 		draw_maze(Global.MAZE1, tile_map, false, Vector2.ZERO)  # Draw player maze with no offset
 		draw_maze(Global.MAZE1, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))  # Draw AI maze with offset
 	elif Global.level == 2:
+		## score
 		Global.max_score = Global.MAZE2_MAX_SCORE
 		coin_progress_bar.max_value = Global.max_score
 		## height and width
@@ -127,6 +143,7 @@ func get_current_level_and_draw() -> void:
 		draw_maze(Global.MAZE2, tile_map, false, Vector2.ZERO)
 		draw_maze(Global.MAZE2, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
 	elif Global.level == 3:
+		## score
 		Global.max_score = Global.MAZE3_MAX_SCORE
 		coin_progress_bar.max_value = Global.max_score
 		## height and width
@@ -137,7 +154,45 @@ func get_current_level_and_draw() -> void:
 		draw_maze(Global.MAZE3, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
 	elif Global.level == 4:
 		print("origin shift level")
+		# Initialize maze with start and end points
+		var maze_data = Level4Algo.initialize_maze()
+		Global.Maze4 = maze_data["maze"]
+		var start_point = maze_data["start_point"]
+		var end_point = maze_data["end_point"]
+		Global.Maze4 = Level4Algo.generate_maze(Global.Maze4)
+		Level4Algo.print_maze(Global.Maze4)
+		
+		## height and width
+		maze_width = Global.Maze4[0].size()
+		maze_height = Global.Maze4.size()
+		## draw
+		draw_maze(Global.Maze4, tile_map, false, Vector2.ZERO)
+		draw_maze(Global.Maze4, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
 
+func _on_maze_shift_timeout():
+	if Global.level == 4 and is_ready and not round_end:
+		# Clear old maze first
+		tile_map.clear()
+		ai_tile_map.clear()
+		
+		# Generate new maze
+		var maze_data = Level4Algo.initialize_maze()
+		Global.Maze4 = Level4Algo.generate_maze(maze_data["maze"])
+		
+		# Redraw
+		maze_width = Global.Maze4[0].size()
+		maze_height = Global.Maze4.size()
+		draw_maze(Global.Maze4, tile_map, false, Vector2.ZERO)
+		draw_maze(Global.Maze4, ai_tile_map, true, 
+			Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
+		
+		# Reposition players
+		#reposition_players(maze_data["start_point"])
+		
+func reposition_players(start_pos: Vector2):
+	player.position = tile_map.map_to_local(start_pos)
+	ai.position = ai_tile_map.map_to_local(start_pos)
+	
 ## draw maze
 func draw_maze(maze, target_tilemap, is_ai_maze, offset) -> void:
 	var tile_size = Vector2(target_tilemap.tile_set.tile_size) * target_tilemap.scale
