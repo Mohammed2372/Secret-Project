@@ -4,7 +4,7 @@ extends Node2D
 @export var player: CharacterBody2D
 @export var ai: CharacterBody2D
 
-@export_category("wall & coins & traps")
+@export_category("wall & coins")
 @export var wall_scenes: Array[PackedScene]
 @export var coin_scene: PackedScene
 @export var special_coin_scene: PackedScene
@@ -35,6 +35,11 @@ var maze_width = 0  # To store the width of the maze for offset calculation
 var maze_height = 0
 var is_paused = false
 var maze_shift_timer: Timer
+
+# TODO: there is an error when you select any level from level menu 
+# 	 	when you have played it before not for the first time.
+# Fix: i think it is because the global scripts of the algorithms.
+
 
 func _ready():
 	#print("Main script running...")

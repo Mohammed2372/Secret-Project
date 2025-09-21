@@ -36,6 +36,15 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/script-ide/plugin.cfg", "res://addons/script-tabs/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "gray",
+"res://assets/": "yellow",
+"res://scenes/": "green",
+"res://scripts/": "red"
+}
+
 [global_group]
 
 key=""
