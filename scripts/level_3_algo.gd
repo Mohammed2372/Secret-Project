@@ -5,7 +5,7 @@ var dirs = [Vector2(-1,0), Vector2(1,0), Vector2(0,-1), Vector2(0,1)]
 var dir_names = ["Up", "Down", "Left", "Right"]
 
 # Thread for AI pathfinding
-var ai_thread = Thread.new()
+var ai_thread: Thread = null
 var ai_result
 
 func find_coin_locations(maze: Array) -> Dictionary:
@@ -168,18 +168,31 @@ func _ai_pathfinding(maze: Array):
 
 # Start the AI pathfinding in a separate thread and wait for the result
 func get_ai_directions(maze: Array) -> Array:
-	if ai_thread.is_started():
-		ai_thread.wait_to_finish()  # Ensure the thread is not already running
-	
+	# If a thread is already running, wait for it to finish
+	if ai_thread != null and ai_thread.is_started():
+		ai_thread.wait_to_finish()
+
 	ai_result = null  # Reset the result
+	# Create a fresh thread for this request
+	ai_thread = Thread.new()
 	ai_thread.start(Callable(self, "_ai_pathfinding").bind(maze))
-	
+
 	# Wait for the thread to finish
 	ai_thread.wait_to_finish()
-	
+
+	# Clean up the thread object
+	ai_thread = null
+
 	return ai_result
 
 # Clean up the thread when done
 func _exit_tree():
-	if ai_thread.is_started():
+	if ai_thread != null and ai_thread.is_started():
 		ai_thread.wait_to_finish()
+		ai_thread = null
+
+func reset_state():
+	# Ensure thread isn't running and clear any cached results
+	if ai_thread != null and ai_thread.is_started():
+		ai_thread.wait_to_finish()
+	ai_result = null

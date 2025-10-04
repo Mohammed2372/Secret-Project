@@ -1,5 +1,10 @@
 extends Control
 
+signal resume_game
+signal restart_game
+signal go_to_levels_menu
+signal go_to_main_menu
+
 ## buttons
 @onready var resume_button = $"VBoxContainer/Resume button"
 @onready var restart_button = $"VBoxContainer/Restart button"
@@ -33,16 +38,14 @@ func toggle_pause():
 
 ## resume
 func resume_pressed():
-	toggle_pause()
+	# Emit a signal so the main script can handle unpausing centrally
+	emit_signal("resume_game")
 
 ## restart
 func restart_pressed():
 	print("restart button pressed")
-	get_tree().paused = false
-	var timer = get_tree().create_timer(0.1)  # Small delay
-	timer.timeout.connect(func():
-		get_tree().reload_current_scene()
-	)
+	# Let the main script handle the actual reload so it can reset globals/state
+	emit_signal("restart_game")
 	
 ## levels menu
 func levels_menu_presses():
@@ -50,14 +53,13 @@ func levels_menu_presses():
 	## handle global score to be 0
 	Global.player_score = 0
 	Global.ai_score = 0
-	
-	## change scene
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/menu_levels.tscn")
+
+	# Notify main to change scene
+	emit_signal("go_to_levels_menu")
 
 ## main menu
 func mainmenu_pressed():
 	print("main menu button pressed")
-	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	# Notify main to change scene
+	emit_signal("go_to_main_menu")
 	

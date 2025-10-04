@@ -81,3 +81,20 @@ var level: int = 1
 var max_score = 100
 var player_score = 0
 var ai_score = 0
+
+func reset():
+	# Reset runtime global fields to defaults
+	player_score = 0
+	ai_score = 0
+	max_score = 100
+	Maze4 = [[]]
+	level = 1
+
+func get_default_maze1() -> Array:
+	return MAZE1
+
+func get_default_maze2() -> Array:
+	return MAZE2
+
+func get_default_maze3() -> Array:
+	return MAZE3

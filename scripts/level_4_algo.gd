@@ -115,3 +115,8 @@ func _ready():
 		#print("Start Point: (", start_point.x, ", ", start_point.y, ")")
 		#print("End Point: (", end_point.x, ", ", end_point.y, ")")
 		#print("")
+
+func reset_state():
+	# No persistent threads here, but expose a reset to clear any cached/random state
+	# (Currently nothing to clear but kept for API consistency)
+	return

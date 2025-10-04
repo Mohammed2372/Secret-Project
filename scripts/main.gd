@@ -50,7 +50,6 @@ func _ready():
 	
 	## set current level
 	Global.level = $".".name.to_int()
-	print("current level is: ", Global.level)
 	
 	## set value of progress bar 
 	coin_progress_bar.value = 0
@@ -78,6 +77,53 @@ func _ready():
 	pause_menu.connect("go_to_levels_menu", Callable(self, "_on_go_to_levels_menu"))
 	pause_menu.connect("go_to_main_menu", Callable(self, "_on_go_to_main_menu"))
 	win_scene.connect("next_level", Callable(self, "_on_next_level"))
+
+## Pause menu signal handlers
+func _on_resume_game() -> void:
+	# Reset state on autoload singletons immediately (stop threads, clear caches)
+	get_tree().paused = false
+	pause_menu.hide()
+
+func _on_restart_game() -> void:
+	# Reset relevant global scores and flags
+	Global.player_score = 0
+	Global.ai_score = 0
+	round_end = false
+
+	# Reset Global state
+	if Global.has_method("reset"):
+		Global.reset()
+	
+	if Level1Algo.has_method("reset_state"):
+		Level1Algo.reset_state()
+	if Level2Algo.has_method("reset_state"):
+		Level2Algo.reset_state()
+	if Level3Algo.has_method("reset_state"):
+		Level3Algo.reset_state()
+	if Level4Algo.has_method("reset_state"):
+		Level4Algo.reset_state()
+
+	# Clear generated maze storage
+	Global.Maze4 = [[]]
+
+	# Unpause, then do a short delayed reload so the tree can unpause cleanly
+	get_tree().paused = false
+	var timer = get_tree().create_timer(0.05)
+	timer.timeout.connect(func():
+		get_tree().reload_current_scene()
+	)
+
+func _on_go_to_levels_menu() -> void:
+	Global.player_score = 0
+	Global.ai_score = 0
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/menu_levels.tscn")
+
+func _on_go_to_main_menu() -> void:
+	Global.player_score = 0
+	Global.ai_score = 0
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
 	## Initialize timer for origin shift
 	if Global.level == 4:
@@ -132,33 +178,54 @@ func get_current_level_and_draw() -> void:
 		Global.max_score = Global.MAZE1_MAX_SCORE
 		coin_progress_bar.max_value = Global.max_score
 		## height and width
-		maze_width = Global.MAZE1[0].size()
-		maze_height = Global.MAZE1.size()
+		# Use a safe reference to the maze (fall back to default if Global was corrupted)
+		var maze_ref: Array
+		if typeof(Global.MAZE1) == TYPE_ARRAY and Global.MAZE1.size() > 0 and typeof(Global.MAZE1[0]) == TYPE_ARRAY:
+			maze_ref = Global.MAZE1
+		else:
+			print("Warning: Global.MAZE1 invalid, falling back to default MAZE1")
+			maze_ref = Global.get_default_maze1()
+
+		maze_width = maze_ref[0].size()
+		maze_height = maze_ref.size()
 		## draw
-		draw_maze(Global.MAZE1, tile_map, false, Vector2.ZERO)  # Draw player maze with no offset
-		draw_maze(Global.MAZE1, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))  # Draw AI maze with offset
+		draw_maze(maze_ref, tile_map, false, Vector2.ZERO)  # Draw player maze with no offset
+		draw_maze(maze_ref, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))  # Draw AI maze with offset
 	elif Global.level == 2:
 		## score
 		Global.max_score = Global.MAZE2_MAX_SCORE
 		coin_progress_bar.max_value = Global.max_score
 		## height and width
-		maze_width = Global.MAZE2[0].size()
-		maze_height = Global.MAZE2.size()
+		var maze_ref: Array
+		if typeof(Global.MAZE2) == TYPE_ARRAY and Global.MAZE2.size() > 0 and typeof(Global.MAZE2[0]) == TYPE_ARRAY:
+			maze_ref = Global.MAZE2
+		else:
+			print("Warning: Global.MAZE2 invalid, falling back to default MAZE2")
+			maze_ref = Global.get_default_maze2()
+
+		maze_width = maze_ref[0].size()
+		maze_height = maze_ref.size()
 		## draw
-		draw_maze(Global.MAZE2, tile_map, false, Vector2.ZERO)
-		draw_maze(Global.MAZE2, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
+		draw_maze(maze_ref, tile_map, false, Vector2.ZERO)
+		draw_maze(maze_ref, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
 	elif Global.level == 3:
 		## score
 		Global.max_score = Global.MAZE3_MAX_SCORE
 		coin_progress_bar.max_value = Global.max_score
 		## height and width
-		maze_width = Global.MAZE3[0].size()
-		maze_height = Global.MAZE3.size()
+		var maze_ref: Array
+		if typeof(Global.MAZE3) == TYPE_ARRAY and Global.MAZE3.size() > 0 and typeof(Global.MAZE3[0]) == TYPE_ARRAY:
+			maze_ref = Global.MAZE3
+		else:
+			print("Warning: Global.MAZE3 invalid, falling back to default MAZE3")
+			maze_ref = Global.get_default_maze3()
+
+		maze_width = maze_ref[0].size()
+		maze_height = maze_ref.size()
 		## draw
-		draw_maze(Global.MAZE3, tile_map, false, Vector2.ZERO)
-		draw_maze(Global.MAZE3, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
+		draw_maze(maze_ref, tile_map, false, Vector2.ZERO)
+		draw_maze(maze_ref, ai_tile_map, true, Vector2(maze_width * tile_map.tile_set.tile_size.x * tile_map.scale.x * 2, 0))
 	elif Global.level == 4:
-		print("origin shift level")
 		# Initialize maze with start and end points
 		var maze_data = Level4Algo.initialize_maze()
 		Global.Maze4 = maze_data["maze"]
@@ -168,6 +235,9 @@ func get_current_level_and_draw() -> void:
 		Level4Algo.print_maze(Global.Maze4)
 		
 		## height and width
+		if typeof(Global.Maze4) != TYPE_ARRAY or Global.Maze4.size() == 0 or typeof(Global.Maze4[0]) != TYPE_ARRAY:
+			print("Error: Global.Maze4 is invalid - type:", typeof(Global.Maze4))
+			return
 		maze_width = Global.Maze4[0].size()
 		maze_height = Global.Maze4.size()
 		## draw

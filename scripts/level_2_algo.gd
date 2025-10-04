@@ -19,36 +19,62 @@ func reconstruct_path(x, y):
 
 # BFS to find the shortest path to the nearest 'C' or 'B'
 func bfs(maze, xx, yy):
-	var n = maze.size()
-	var m = maze[0].size()
+	# Defensive: ensure maze is a 2D array
+	if typeof(maze) != TYPE_ARRAY or maze.size() == 0 or typeof(maze[0]) != TYPE_ARRAY:
+		return []
+
+	var n = int(maze.size())
+	var m = int(maze[0].size())
 	var q = []
-	q.append(Vector2(xx, yy))
-	vis[xx][yy] = true
-	par[xx][yy] = Vector2(-1, -1) # Start cell has no parent
+	var x = int(xx)
+	var y = int(yy)
+	q.append(Vector2(x, y))
+	# Ensure vis/par have been initialized to correct dimensions by caller
+	if vis.size() != n or par.size() != n:
+		# initialize local ones to avoid crashes
+		vis = []
+		par = []
+		for i in range(n):
+			vis.append([])
+			par.append([])
+			for j in range(m):
+				vis[i].append(false)
+				par[i].append(Vector2(-1, -1))
+
+	vis[x][y] = true
+	par[x][y] = Vector2(-1, -1) # Start cell has no parent
 	
 	while q.size() > 0:
 		var p = q.pop_front()
-		var x = p.x
-		var y = p.y
-		
+		x = int(p.x)
+		y = int(p.y)
+
 		for i in range(4):
-			var ny = y + dy[i]
-			var nx = x + dx[i]
-			
-			if ny >= 0 and ny < n and nx >= 0 and nx < m and not vis[nx][ny] and maze[nx][ny] != '#':
-				vis[nx][ny] = true
-				par[nx][ny] = Vector2(x, y) # Set parent of (nx, ny) to (x, y)
-				q.append(Vector2(nx, ny))
-				
-				if maze[nx][ny] == 'B' or maze[nx][ny] == 'C':
-					return reconstruct_path(nx, ny) # Reconstruct path from (nx, ny) to start
+			var ny = int(y + dy[i])
+			var nx = int(x + dx[i])
+
+			if ny >= 0 and ny < n and nx >= 0 and nx < m:
+				# Ensure the maze row is an Array before indexing
+				if typeof(maze[nx]) != TYPE_ARRAY:
+					return []
+				# Now safe to index
+				if not vis[nx][ny] and maze[nx][ny] != '#':
+					vis[nx][ny] = true
+					par[nx][ny] = Vector2(x, y) # Set parent of (nx, ny) to (x, y)
+					q.append(Vector2(nx, ny))
+
+					if maze[nx][ny] == 'B' or maze[nx][ny] == 'C':
+						return reconstruct_path(nx, ny) # Reconstruct path from (nx, ny) to start
 	
 	return [] # Return empty path if no 'C' or 'B' is found
 
 func algo(maze, x, y):
+	if typeof(maze) != TYPE_ARRAY or maze.size() == 0 or typeof(maze[0]) != TYPE_ARRAY:
+		return []
+
 	var full_path = []
-	var n = maze.size()
-	var m = maze[0].size()
+	var n = int(maze.size())
+	var m = int(maze[0].size())
 	
 	while true:
 		# Reset visited and parent arrays
@@ -70,9 +96,9 @@ func algo(maze, x, y):
 			full_path.append(p)
 		
 		# Update x and y to the position of the last 'C' or 'B' found
-		x = path[-1].x
-		y = path[-1].y
-		
+		x = int(path[-1].x)
+		y = int(path[-1].y)
+
 		# Mark the current 'C' or 'B' as visited or block it to avoid revisiting
 		maze[x][y] = '.'
 	
@@ -93,3 +119,9 @@ func path_to_directions(path):
 		elif dy == -1:
 			directions.append("Left")
 	return directions
+
+func reset_state():
+	vis = []
+	par = []
+	dx = [0, 0, -1, 1]
+	dy = [-1, 1, 0, 0]
