@@ -2,6 +2,9 @@
 
 This project implements a maze-solving game with progressively complex AI algorithms across different levels. Each level introduces a more sophisticated pathfinding strategy, making the AI more challenging to compete against.
 
+
+**Download the game from** [here](https://osc-studio.itch.io/competitive-maze)
+
 ## Level 1: Farthest-First Breadth-First Search (Easy Mode)
 
 The first level implements a modified Breadth-First Search (BFS) algorithm that prioritizes collecting the farthest coins first. This creates a predictable but less efficient AI opponent.
